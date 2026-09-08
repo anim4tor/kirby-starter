@@ -1,0 +1,6 @@
+﻿<?php
+$level = $level ?? 'h2';
+$text  = $text  ?? ($slot ?? '');
+$css   = $css   ?? '';
+?>
+<<?= $level ?> class="heading heading-<?= $level ?> <?= $css ?>"><?= html($text) ?></<?= $level ?>>

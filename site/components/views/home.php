@@ -1,14 +1,13 @@
 ﻿<?php snippet('layout', slots: true) ?>
 
-<section class="hero">
-  <h1><?= $page->headline()->or($page->title())->html() ?></h1>
-  <?php if ($page->intro()->isNotEmpty()): ?>
-    <p class="intro"><?= $page->intro()->html() ?></p>
-  <?php endif ?>
-</section>
+<?php snippet('organisms/Hero', [
+  'headline' => $page->headline()->or($page->title())->value(),
+  'intro'    => $page->intro()->value(),
+  'button'   => ['label' => 'ZaÄŤĂ­t projekt', 'url' => '#features', 'style' => 'primary']
+]) ?>
 
 <?php if ($page->layout_blocks()->isNotEmpty()): ?>
-  <div class="blocks-container">
+  <div class="blocks-container" id="features">
     <?php foreach ($page->layout_blocks()->toBlocks() as $block): ?>
       <div class="block-item block-<?= $block->type() ?>">
         <?= $block ?>
