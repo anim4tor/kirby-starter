@@ -1,7 +1,7 @@
-﻿Title: DomĹŻ
+Title: Domů
 ----
-Headline: VĂ­tejte v Kirby Starter
+Headline: Vítejte v Kirby Starter
 ----
-Intro: Tento projekt je pĹ™ipraven s automatickou distribucĂ­ Kirby enginu, pĹ™epĂ­naÄŤem verzĂ­ na hostingu a obousmÄ›rnĂ˝m verzovĂˇnĂ­m obsahu do Gitu.
+Intro: Tento projekt je připraven s automatickou distribucí Kirby enginu, přepínačem verzí na hostingu a obousměrným verzováním obsahu do Gitu.
 ----
-Layout_blocks: [{"content":{"level":"h2","text":"RychlĂ˝ start"},"id":"b1","type":"heading"},{"content":{"text":"ZaÄŤnÄ›te Ăşpravou Ĺˇablon v `site/components/` a blueprintĹŻ v `site/engine/blueprints/`."},"id":"b2","type":"text"},{"content":{"link":"https://getkirby.com/docs","style":"primary","text":"Dokumentace Kirby"},"id":"b3","type":"button"}]
+Layout_blocks: [{"content":{"level":"h2","text":"Rychlý start"},"id":"b1","type":"heading"},{"content":{"text":"Začněte úpravou šablon v `site/components/` a blueprintů v `site/engine/blueprints/`."},"id":"b2","type":"text"},{"content":{"link":"https://getkirby.com/docs","style":"primary","text":"Dokumentace Kirby"},"id":"b3","type":"button"}]

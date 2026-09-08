@@ -1,1 +1,0 @@
-﻿<?= snippet('organisms/Html',[ 'page' => $page ]) ?>

@@ -1,4 +1,4 @@
-﻿Title: Kirby Starter
+Title: Kirby Starter
 ----
 Site_title: Kirby Project Starter
 ----

@@ -1,21 +1,21 @@
-﻿title: Site
+title: Site
 columns:
   main:
     width: 2/3
     sections:
       pages:
         type: pages
-        headline: StrĂˇnky
+        headline: Stránky
         create: default
   sidebar:
     width: 1/3
     sections:
       site_info:
         type: fields
-        headline: NastavenĂ­ webu
+        headline: Nastavení webu
         fields:
           site_title:
-            label: NĂˇzev projektu
+            label: Název projektu
             type: text
           site_description:
             label: Popis webu
@@ -23,4 +23,4 @@ columns:
             buttons: false
       files:
         type: files
-        headline: GlobĂˇlnĂ­ soubory
+        headline: Globální soubory

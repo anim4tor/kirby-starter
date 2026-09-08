@@ -1,4 +1,4 @@
-﻿name: đź”„ Sync Kirby Engine Across Branches
+name: 🔄 Sync Kirby Engine Across Branches
 
 on:
   push:
@@ -16,21 +16,21 @@ concurrency:
 
 jobs:
   sync-engine:
-    name: đź”„ Sync Engine & Blueprints
+    name: 🔄 Sync Engine & Blueprints
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
-      - name: đźšš Checkout repository
+      - name: 🚚 Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: âš™ď¸Ź Setup Git
+      - name: ⚙️ Setup Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: đź“¦ Backup current engine files
+      - name: 📦 Backup current engine files
         run: |
           mkdir -p /tmp/engine_backup
           cp -r site/engine /tmp/engine_backup/
@@ -40,7 +40,7 @@ jobs:
           fi
           echo "Engine files saved to backup directory."
 
-      - name: đź” Distribute engine to all target branches
+      - name: 🔀 Distribute engine to all target branches
         run: |
           SOURCE_BRANCH="${GITHUB_REF#refs/heads/}"
           echo "Triggered from source branch: $SOURCE_BRANCH"
@@ -76,8 +76,8 @@ jobs:
               git commit -m "chore(engine): auto-sync kirby engine from ${SOURCE_BRANCH} [skip ci]"
               git pull --rebase origin "$BRANCH" 2>/dev/null || true
               git push origin "$BRANCH"
-              echo "âś… Pushed updated engine to $BRANCH."
+              echo "✅ Pushed updated engine to $BRANCH."
             else
-              echo "â„ąď¸Ź No engine differences for $BRANCH, skipping."
+              echo "ℹ️ No engine differences for $BRANCH, skipping."
             fi
           done

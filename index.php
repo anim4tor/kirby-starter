@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 $projectConfigFile = __DIR__ . '/project.json';
 $projectConfig = file_exists($projectConfigFile) ? json_decode(file_get_contents($projectConfigFile), true) : [];

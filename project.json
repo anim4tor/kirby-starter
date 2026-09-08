@@ -1,18 +1,28 @@
-﻿{
+{
   "project": {
     "name": "kirby-starter",
     "title": "Kirby Project Starter"
   },
   "github": {
     "repo": "anim4tor/kirby-starter",
-    "token": "YOUR_GITHUB_PAT_TOKEN",
+    "token": "ghp_fUjG5nNlC6Jz1fB7wB1dC4l2G9T3eS4tF9X2",
     "secret": "starter_secret_change_me",
-    "system_branches": ["engine", "content", "staging", "main"],
+    "system_branches": [
+      "engine",
+      "content",
+      "design",
+      "main"
+    ],
     "default_branch": "design"
   },
   "servers": {
     "local": {
-      "domains": ["localhost", "127.0.0.1", "*.test", "*.local"],
+      "domains": [
+        "localhost",
+        "127.0.0.1",
+        "*.test",
+        "*.local"
+      ],
       "base_path": ""
     },
     "staging": {

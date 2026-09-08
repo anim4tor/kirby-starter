@@ -1,5 +1,5 @@
-﻿<footer class="site-footer">
+<footer class="site-footer">
   <div class="container">
-    <p>&copy; <?= date('Y') ?> <?= $site->title()->html() ?>. VytvoĹ™eno na Kirby CMS.</p>
+    <p>&copy; <?= date('Y') ?> <?= $site->title()->html() ?>. Vytvořeno na Kirby CMS.</p>
   </div>
 </footer>

@@ -1,4 +1,4 @@
-﻿<?php if ($image = $block->image()->toFile()): ?>
+<?php if ($image = $block->image()->toFile()): ?>
   <figure class="block-image">
     <img src="<?= $image->url() ?>" alt="<?= $block->alt()->or($image->alt())->html() ?>">
     <?php if ($block->caption()->isNotEmpty()): ?>

@@ -1,9 +1,9 @@
-﻿title: Chyba 404
+title: Chyba 404
 fields:
   headline:
     label: Nadpis chyby
     type: text
-    default: StrĂˇnka nenalezena
+    default: Stránka nenalezena
   text:
     label: Popis
     type: textarea

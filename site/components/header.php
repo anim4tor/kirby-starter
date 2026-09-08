@@ -1,4 +1,4 @@
-﻿<header class="site-header">
+<header class="site-header">
   <div class="container header-inner">
     <a href="<?= $site->url() ?>" class="site-logo">
       <?= $site->title()->html() ?>

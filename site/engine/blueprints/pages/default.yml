@@ -1,10 +1,10 @@
-﻿title: StrĂˇnka
+title: Stránka
 columns:
   main:
     width: 2/3
     fields:
       text:
-        label: Text strĂˇnky
+        label: Text stránky
         type: blocks
   sidebar:
     width: 1/3

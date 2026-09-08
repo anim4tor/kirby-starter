@@ -1,3 +1,3 @@
-﻿<div class="block-text">
+<div class="block-text">
   <?= $block->text()->kt() ?>
 </div>

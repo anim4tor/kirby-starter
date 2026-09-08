@@ -12,7 +12,7 @@
     <?= snippet('organisms/Contact') ?>
     
     <!-- The theme widget --> 
-    <?php snippet('atoms/Theme'); ?>
+    <?php //snippet('atoms/Theme'); ?>
     
     <!-- Scroll container -->
     <main id="top" data-scroll-content>
