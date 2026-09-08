@@ -1,0 +1,235 @@
+/*	
+
+	LAYOUT
+
+*/
+
+@import "../Media/media";
+
+:root {
+	
+}
+
+$limit: 20;
+$display: (
+	grid, 
+	flex, 
+	block, 
+	inline-flex, 
+	inline-block, 
+	none
+);
+$flow: (
+	horizontal: row, 
+	vertical: column, 
+	none: none
+);
+$gap: (
+	'': gap,
+	'-x': column-gap, 
+	'-y': row-gap
+);
+$pos: (
+	start, 
+	center, 
+	end, 
+	stretch, 
+	none, 
+	space-between, 
+	space-around
+);
+
+@mixin grid_columns {
+	@for $col from 1 through 12 {
+		&__#{$col} {
+			--ncol: #{$col};
+			display: grid;
+			grid-template-columns: repeat(var(--ncol), minmax(0, 1fr));
+		}
+	}
+}
+@mixin grid_rows {
+	@for $row from 1 through 12 {
+		&__#{$row} {
+			--nrow: #{$row};
+			display: grid;
+			grid-template-rows: repeat(var(--nrow), minmax(0, 1fr));
+		}
+	}
+}
+@mixin grid_span {
+	@for $width from 1 through 12 {
+		&__#{$width} {
+			--width: #{$width};
+			grid-column: span var(--width);
+		}
+	}
+}
+@mixin display($modifier: '') {
+  @each $label in $display {
+    .#{$modifier}#{$label} {
+      display: #{$label};
+    }
+  }
+}
+@mixin flow() {
+	@each $label, $value in $flow {
+		&__#{$label} {
+			flex-flow: #{$value};
+			grid-auto-flow: #{$value};
+		}
+	}
+}
+@mixin place() {
+	@each $align in $pos {
+		@each $justify in $pos {
+			&__#{$align}-#{$justify} {
+				place-content: #{$align} #{$justify};
+				place-items: #{$align} #{$justify};
+			}
+		}
+	}
+}
+@mixin align() {
+	@each $align in $pos {
+		&__#{$align} {
+			align-content: #{$align};
+			align-items: #{$align};
+		}
+	}
+}
+@mixin justify() {
+	@each $justify in $pos {
+		&__#{$justify} {
+			justify-content: #{$justify};
+			justify-items: #{$justify};
+		}
+	}
+}
+
+@mixin gap($max: $limit) {
+  @for $i from 0 through $max {
+  	@each $label, $attr in $gap {
+	  	@if($i == 0) { 
+	  		&#{$label}__#{$i} {
+	  		  --gap: calc(0.15 * var(--spacing));
+	  		  #{$attr}: var(--gap);
+	  		}
+	  	} @else {
+		    &#{$label}__#{$i} {
+		      --gap: calc(#{$i} * var(--spacing));
+		      #{$attr}: var(--gap);
+		    }
+	  	}
+  	}
+  } 
+  @for $i from 1 through 9 {
+  	@each $label, $attr in $gap {
+      &#{$label}__0#{$i} {
+	      --gap: calc(#{$i/10} * var(--spacing));
+	      #{$attr}: var(--gap);
+	    }
+	  }
+  } 
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+	@if($modifier == '') {
+		@include display;
+		.grid {
+			@include grid_columns;
+		}
+		.rows {
+			@include grid_rows;
+		}
+		.span {
+			@include grid_span;
+		}
+		.flow {
+			@include flow;
+		}
+		.place {
+			@include place;
+		}
+		.align {
+			@include align;
+		}
+		.justify {
+			@include justify;
+		}
+		.gap {
+			@include gap;
+		}
+	} @else {
+		@include create-mq($breakpoint, 'max') {
+			@include display(#{$modifier}\:);
+			.#{$modifier}\:grid {
+				@include grid_columns;
+			}
+			.#{$modifier}\:span {
+				@include grid_span;
+			}
+			.#{$modifier}\:flow {
+				@include flow;
+			}
+			.#{$modifier}\:place {
+				@include place;
+			}
+			.#{$modifier}\:align {
+				@include align;
+			}
+			.#{$modifier}\:justify {
+				@include justify;
+			}
+			.#{$modifier}\:gap {
+				@include gap;
+			}
+		}
+	}
+}
+
+.grow {
+	flex-grow: 1;
+	word-break: break-word;
+}
+
+.wrap {
+	flex-wrap: wrap;
+	white-space: pre-wrap;
+
+}
+
+.no__wrap {
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
+
+.z__1 {
+	z-index: 1;
+}
+
+.grid__stack {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-rows: 1fr;
+	min-width: 0;
+	width: 100%;
+
+	& > * {
+		grid-column: 1;
+		grid-row: 1;
+		min-width: 0;
+	}
+}
+
+.intro__rows {
+	grid-template-rows: 0.8fr 1.2fr;
+}
+
+.rows__auto-1 {
+	grid-template-rows: auto 1fr;
+}
+
+.grid__auto {
+	
+}

@@ -1,0 +1,268 @@
+/*
+
+	ATOM: Reveal
+	
+*/
+@import "../Media/media";
+@import "../../atoms/Animation/animation";
+:root {
+	--reveal-duration: var(--animation-duration);
+  --reveal-stack: var(--animation-stagger);
+  --reveal-delay: 0ms;
+  --color-delay: 300ms;
+
+  --reveal-ty: 0.2em;
+  --reveal-op: 0;
+}
+
+
+/*
+
+  Base reveal
+  
+*/
+
+[data-reveal] {
+  @include animation(transform);
+  visibility: hidden;
+  transition-delay: var(--delay);
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      --delay: calc(var(--in-delay, 0) + #{$i} * 100ms);
+    }
+  }
+  transform: scale(0);
+}
+
+[data-reveal="opacity"] {
+  transform: none;
+  opacity: 0;
+}
+[data-scroll]:not([data-scroll-ignore]).is-inview [data-reveal],
+[data-scroll]:not([data-scroll-ignore]).is-inview[data-reveal],
+[data-scroll][data-scroll-ignore].is-inview [data-tab-reveal][data-active] [data-reveal] {
+  visibility: visible;
+  transform: none;
+  opacity: 1;
+}
+
+[data-reveal="simple"] {
+  @include animation(transform, opacity, color);
+  visibility: hidden;
+  transition-delay: var(--delay);
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      --delay: calc(var(--in-delay, 0) + #{$i} * 100ms);
+    }
+  }
+  transform: translateY(var(--reveal-ty));
+  opacity: 0;
+  color: var(--color-acc);
+}
+[data-scroll]:not([data-scroll-ignore]).is-inview [data-reveal],
+[data-scroll]:not([data-scroll-ignore]).is-inview[data-reveal],
+[data-scroll][data-scroll-ignore].is-inview [data-tab-reveal][data-active] [data-reveal] {
+  visibility: visible;
+  transform: none;
+  opacity: 1;
+  color: var(--col);
+}
+
+
+
+/*
+
+  Reveal images
+  
+*/
+
+[data-reveal-image] {
+/*    clip-path: inset(100% 0% 0% 0%);*/
+    opacity: 0;
+    --delay: calc(var(--in-delay, 0ms) + var(--reveal-delay, 0ms) + 200ms);
+    @include animation((opacity, clip-path), calc(var(--reveal-duration)*1), (var(--delay)));
+}
+
+[data-reveal-cover] {
+  $mask: '';
+  $steps: 1;
+  $inc: 100% / $steps;
+
+  @for $i from 1 through $steps {
+    // Změna: z ($steps - $i) na ($i - 1)
+    $mask: $mask + 'transparent #{$inc * ($i - 1)} calc( #{$inc*$i} - (var(--p) * 2 - #{($i - 1)/$steps}) * #{$inc} )';
+    $mask: $mask + ', ';
+    $mask: $mask + 'black calc( #{$inc*$i} - (var(--p) * 2 - #{($i - 1)/$steps}) * #{$inc} ) #{$inc*$i}';
+    @if $i < $steps {
+      $mask: $mask + ', ';
+    } @else {
+      $mask: $mask + ';';
+    }
+  }
+
+  figure {
+    --items: 1;
+    --p: 0;
+    --mask: #{$mask};
+    mask-image: linear-gradient(90deg, var(--mask));
+    height: 100vh;
+  }
+}
+
+.is-inview[data-reveal-image], 
+.is-inview [data-reveal-image] {
+    clip-path: inset(0% 0% 0% 0%);
+    opacity: 1;
+}
+
+[data-scroll].is-inview[data-reveal-cover] figure, 
+[data-scroll].is-inview [data-reveal-cover] figure {
+    --p: 1;
+    transition: --p var(--reveal-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+
+/*
+
+  Reveal text
+  
+*/
+@mixin reveal-text-setup {
+  visibility: hidden;
+  transition: visibility 0s linear var(--reveal-duration);
+  [data-word] {
+    display: inline-block;
+    vertical-align: bottom;
+    clip-path: inset(-0.2em -0.1em -0.2em -0.1em);
+    & > span {
+      display: inline-block;
+      opacity: var(--reveal-op);
+      transform: translateY(var(--reveal-ty));
+      @include animation((opacity, transform, color), var(--reveal-duration), (var(--delay), var(--delay), calc(var(--delay) + var(--color-delay))));
+      
+    }
+  }
+}
+
+@mixin reveal-text-line {
+  @include reveal-text-setup;
+  [data-word] > span {
+    color: var(--color-acc);
+    --delay: calc(var(--line-index) * var(--reveal-stack) + var(--in-delay, 0ms) + var(--reveal-delay, 0ms));
+  }
+}
+@mixin reveal-text-word {
+  @include reveal-text-setup;
+  [data-word] > span {
+    color: var(--color-acc);
+    --delay: calc(var(--word-index) * var(--reveal-stack) + var(--in-delay, 0ms) + var(--reveal-delay, 0ms)); 
+  }
+}
+@mixin reveal-text-char {
+  @include reveal-text-setup;
+  [data-word] > span {
+    color: var(--color-acc);
+    --delay: calc(var(--char-index) * var(--reveal-stack)/((var(--word-total) + 1)/2) + var(--in-delay, 0ms) + var(--reveal-delay, 0ms));
+  }
+}
+
+@mixin reveal-text-in {
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+  [data-word] > [data-char],
+  [data-word] > span {
+    transform: none;
+    color: var(--col);
+    opacity: 1;
+  }
+}
+
+@mixin reveal-text-out {
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+  [data-word] > [data-char],
+  [data-word] > span {
+    color: var(--color-acc);
+    opacity: var(--reveal-op);
+    transform: translateY(var(--reveal-ty));
+  }
+}
+@keyframes reveal-in {
+  0% {
+    transform: translateY(1.5em);
+/*    transform: scaleX(0);*/
+  }
+  30% {
+    color: var(--color-acc);
+  }
+  100% {
+    transform: none;
+    color: var(--col);
+  }
+}
+@keyframes hover-in {
+  to {
+    color: var(--color-acc);
+  }
+}
+@keyframes reveal-out {
+  to {
+    transform: translateY(150%);
+  }
+}
+
+[data-reveal-text]:not([data-hover-reveal]) {
+  @include reveal-text-char;
+}
+[data-reveal-text="words"]:not([data-hover-reveal]) {
+  @include reveal-text-word;
+}
+[data-reveal-text="lines"]:not([data-hover-reveal]) {
+  @include reveal-text-line;
+}
+
+[data-scroll]:not([data-scroll-ignore]).is-inview [data-reveal-text],
+[data-scroll]:not([data-scroll-ignore]).is-inview[data-reveal-text] {
+  @include reveal-text-in;
+}
+
+[data-reveal-text-out] {
+  @include reveal-text-out;
+}
+
+/*
+
+  Scroll reveal
+
+*/
+
+[data-scroll-trigger] {
+  --in:        calc(var(--progress) - var(--start));
+  --trigger-in:    clamp(0,calc(var(--in)*10000),1);
+  --out:       calc(var(--progress) - var(--end));
+  --trigger-out:   clamp(0,calc(var(--out)*10000),1);
+}
+
+/*
+
+  Hover reveal
+  
+*/
+
+/* 1. VÝCHOZÍ STAV (když se na element neklepe ani neNajíždí) */
+[data-hover-reveal] {
+  &[data-reveal-text],
+  [data-reveal-text] {
+    @include reveal-text-setup;
+  }
+}
+
+/* 2. HOVER IN STAV (když na něj najedeš) */
+[data-hoverable]:hover [data-hover-reveal] {
+  &[data-reveal-text],
+  [data-reveal-text] {
+    @include reveal-text-in;
+  }
+}

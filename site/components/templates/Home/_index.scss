@@ -1,0 +1,182 @@
+/*
+
+	PAGE: Index 
+	
+*/
+@import "../../atoms/Animation/animation";
+
+:root {
+
+}
+
+[page="home"] {
+
+}
+
+[data-tabs] {
+	[data-tab] {
+/*		@include animation(opacity);*/
+	}
+	[data-tab]:hover {
+		opacity: 1;
+	}
+	[data-tab][data-active] [data-reveal-text]:not([data-reveal-text="lines"]) span {
+		--reveal-delay: 0ms;
+		--color-delay: 0ms;
+		--in-delay: 0ms;
+		--reveal-duration: 600ms;
+		color: var(--color-acc) !important;
+	}
+}
+
+/* Container pro celé číslo */
+.carousel-counter {
+	display: inline-flex;
+	overflow: hidden;
+	/* Výška musí odpovídat výšce jednoho řádku vašeho fontu */
+	line-height: 1em; 
+	height: 1em; 
+
+	color: var(--color-acc);
+	transition: color 2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+	.is-inview {
+		.carousel-counter {
+			color: var(--color-dark);
+		}
+	}
+
+/* Vertikální pás pro jednu číslici (0-9) */
+.counter-ribbon {
+	display: inline-flex;
+	flex-direction: column;
+	height: 10em; /* Obsahuje 10 číslic pod sebou */
+	transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1); /* Plynulý a prémiový dojezd */
+}
+
+
+/* Jednotlivá číslice v pásu */
+.counter-digit {
+	height: 1em;
+	line-height: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Hlavní ořezový kontejner */
+.logo-ticker-container {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+
+    &:before, &:after {
+    	content: '';
+    	display: block;
+    	z-index: 1;
+    	width: 5vw;
+    	position: absolute;
+    	top: 0;
+    	bottom: 0;
+    }
+    &:before {
+    	left: 0;
+    	background: linear-gradient(to right, var(--background), transparent);
+    }
+    &:after {
+    	right: 0;
+    	background: linear-gradient(to left, var(--background), transparent);
+
+    }
+}
+
+/* Pruh, který se bude hýbat */
+.logo-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerLoop 25s linear infinite; /* 25s určuje rychlost posunu */
+}
+
+/* Skupina log (jedna sada) */
+.logo-ticker-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* Zajistí, že loga budou mít dostatek prostoru a nesrazí se */
+    min-width: 100%; 
+}
+
+/* Zajištění fixní nebo flexibilní šířky pro samotná loga uvnitř flexu */
+.logo-ticker-group figure {
+    flex-shrink: 0;
+    /* Můžete definovat šířku, pokud SVGs nemají vlastní rozměry, např: width: 160px; */
+}
+
+/* Volitelné: Zastavení animace, pokud na loga uživatel najede myší */
+.logo-ticker-container:hover .logo-ticker-track {
+/*    animation-play-state: paused;*/
+}
+
+/* Definice nekonečné smyčky */
+@keyframes tickerLoop {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        /* Posun přesně o polovinu délky tracku (o celou jednu sadu) */
+        transform: translate3d(-50%, 0, 0); 
+    }
+}
+
+section.process {
+	.item__figure.--scrollable {
+		transform: scale(calc(0.3 + (var(--progress)*1.4) - (Max(0,(var(--progress) - 0.5))*2.8) ));
+	}
+
+	[card] {
+		--start: var(--index)/(var(--total) + 1);
+		--relative-progress: Clamp(0, var(--progress) - var(--start), 1);
+/*		opacity: calc(1 - 5*var(--relative-progress));*/
+		filter: brightness(calc(1.0 - 0.5*var(--relative-progress)));
+		transform: scale(Max(0.5, calc(1 - 1*var(--relative-progress))))
+				   translateY(Max(-15em, calc(0em - 30em*var(--relative-progress))));
+	}
+
+	.card__wrapper:last-child [card] {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/*section {
+	max-width: 2200px;
+	margin: 0 auto;
+}*/
+
+.container {
+	
+}
+
+.process__grid {
+  display: grid;
+  /* 
+    We define 5 equal columns by default using 1fr each. 
+    Total relative tracks = 6fr (1 + 2 + 1 + 1 + 1).
+  */
+  grid-template-columns: repeat(5, 1fr);
+  @include animation;
+  transition-duration: 400ms;
+}
+
+
+/* 
+  When a specific column has data-active, we dynamically shift 
+  the 5-column track definition so that the active column takes 2fr 
+  and the rest remain 1fr.
+*/
+.process__grid:has([data-tab]:nth-child(1)[data-active]) { grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr; }
+.process__grid:has([data-tab]:nth-child(2)[data-active]) { grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr; }
+.process__grid:has([data-tab]:nth-child(3)[data-active]) { grid-template-columns: 1fr 1fr 2.5fr 1fr 1fr; }
+.process__grid:has([data-tab]:nth-child(4)[data-active]) { grid-template-columns: 1fr 1fr 1fr 2.5fr 1fr; }
+.process__grid:has([data-tab]:nth-child(5)[data-active]) { grid-template-columns: 1fr 1fr 1fr 1fr 2.5fr; }

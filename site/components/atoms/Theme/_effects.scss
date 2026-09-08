@@ -1,0 +1,39 @@
+/*	
+
+	EFFECTS
+
+*/
+@import "../Media/media";
+:root {
+	
+}
+
+@mixin opacity {
+  @for $i from 0 through 10 {
+	&__#{$i} {
+	  opacity: calc(#{$i}/10);
+	}
+  } 
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+	@if($modifier == '') {
+		.op {
+			@include opacity;
+		}
+	} @else {
+		@include create-mq($breakpoint, 'max') {
+			.#{$modifier}\:op {
+				@include opacity;
+			}
+		}
+	}
+}
+
+.bg__blur {
+	backdrop-filter: blur(1em);
+}
+
+.blend__darken {
+	mix-blend-mode: darken;
+}

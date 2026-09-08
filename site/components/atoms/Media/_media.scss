@@ -1,0 +1,52 @@
+/*
+
+    MEDIA
+
+*/
+$screen-mobile   : 480px;
+$screen-tablet   : 768px;
+$screen-laptop   : 1280px;
+$screen-desktop  : 1440px;
+
+$map-grid-props: (
+    '': $screen-desktop,
+    'tablet': $screen-tablet,
+    'mobile': $screen-mobile,
+);
+@mixin create-mq($breakpoint, $min-or-max) {
+  @if($breakpoint == 0) {
+    @content;
+  } @else {
+    @media screen and (#{$min-or-max}-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+@mixin xs-screen
+{
+  @media screen and (max-width: $screen-mobile)
+  {
+    @content;
+  }
+}
+@mixin sm-screen
+{
+  @media screen and (max-width: $screen-tablet)
+  {
+    @content;
+  }
+}
+@mixin md-screen
+{
+  @media screen and (max-width: $screen-laptop)
+  {
+    @content;
+  }
+}
+@mixin lg-screen
+{
+  @media screen and (max-width: $screen-desktop)
+  {
+    @content;
+  }
+}

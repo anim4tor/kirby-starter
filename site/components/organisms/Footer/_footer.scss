@@ -1,0 +1,41 @@
+/*
+
+	FOOTER
+	
+*/
+:root {
+	--progress: 0;
+}
+
+
+footer,
+.footer {
+	position: relative;
+	pointer-events: none;
+	& > * {
+		pointer-events: all;
+	}
+
+	.footer__logo  {
+		height: 3em;
+		svg {
+			width: auto;
+			height: 100%;
+		}
+	}
+
+	.footer__nav .link {
+		&:hover {
+			opacity: 1;
+			& [data-word] span {
+				--reveal-delay: 0ms;
+				--reveal-duration: 600ms;
+				color: var(--color-acc) !important;
+			}
+		}
+	}
+}
+
+[data-footer] {
+	
+}

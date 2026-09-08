@@ -1,7 +1,20 @@
-﻿<?php
-$text = $text ?? ($slot ?? '');
-$css  = $css  ?? '';
+<?php
+    // Parameter Sanitizations & Fallbacks
+    $text            = (!isset($text) || trim($text) === '') ? false : $text;
+    $css             = (!isset($css) || trim($css) === '') ? '' : $css;
+    $node             = (!isset($node) || trim($node) === '') ? '' : $node;
+
+    // Animation Properties Sanitizations
+    $reveal       = (isset($reveal) && ($reveal === 'true' || $reveal === true)) ? true : false;
+    $revealDirection = (!isset($revealDirection) || $revealDirection === false || trim($revealDirection) === '') ? false : $revealDirection;
 ?>
-<div class="prose <?= $css ?>">
-  <?= is_string($text) ? kirbytext($text) : $text ?>
-</div>
+
+<?php if ($text) : ?>
+	<p 
+		<?= $reveal ? 'data-scroll data-reveal-text="lines"' : '' ?>
+		class="<?= esc($css) ?>" 
+		<?= $node ?>
+	>
+		<?= $text ?>
+	</p>
+<?php endif ?>

@@ -1,0 +1,146 @@
+/*
+
+	ORGANISMS: Loader
+
+*/
+@import "../../atoms/Media/media";
+@import "../../atoms/Animation/animation";
+:root {
+
+}
+
+.loader {
+  --progress: 0;
+  z-index: 9999;
+  position: fixed;
+  inset: 0;
+  [data-progress] {
+    transform-origin: center right;
+    transform: scaleX(calc(1 - var(--progress)*1));
+  }
+}
+  
+[data-loader] {
+  pointer-events: none;
+  @include animation((clip-path), 600ms);
+  clip-path: inset(100% 0% 0% 0%);
+
+}
+  
+  [data-loader-bg] {
+    $mask: '';
+    $steps: 1;
+    $inc: 100% / $steps;
+
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(#{$steps}, 1fr);
+/*    @include animation(transform, 600ms);*/
+/*    transform-origin: center right;*/
+/*    transform: scaleX(1);*/
+
+    div {
+      @include animation((transform, background-color), 600ms);
+      background-color: var(--color-dark);
+    }
+
+
+    @for $i from 1 through $steps {
+      $mask: $mask + 'transparent #{$inc * ($i - 1)} calc( #{$inc*$i} - (var(--p)*(var(--items)*2) - #{($steps - $i)/$steps}) * #{$inc} )';
+      $mask: $mask + ', ';
+      $mask: $mask + 'black calc( #{$inc*$i} - (var(--p)*(var(--items)*2) - #{($steps - $i)/$steps}) * #{$inc} ) #{$inc*$i}';
+      @if $i < $steps {
+        $mask: $mask + ', ';
+      } @else {
+        $mask: $mask + ';';
+      }
+    } 
+    --items: 1;
+    --mask: #{$mask};
+/*    mask-image: linear-gradient(90deg, var(--mask));*/
+
+/*    --p: 1;*/
+/*    transition: --p var(--reveal-duration) cubic-bezier(0.4, 0, 0.2, 1), background-color var(--reveal-duration) cubic-bezier(0.4, 0, 0.2, 1);*/
+
+  }
+  [data-loader-logo] {
+    z-index: 1;
+    position: relative;
+    @include animation(opacity, 600ms);
+
+    svg {
+      width: 4vw;
+      height: 4vw;
+    }
+  }
+
+@keyframes loading {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+[data-reveal-on-loader] {
+  visibility: hidden;
+  clip-path: inset(100% 0% 0% 0%);
+  @include animation(clip-path, 0.5s);
+}
+
+html.on-loader {
+
+  [data-reveal-on-loader] {
+    visibility: visible;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+
+}
+
+
+html[data-loading] {
+  pointer-events: none;
+
+  [data-loader] {
+    visibility: visible;
+    pointer-events: all;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+html[data-transition] {
+  [data-loader] {
+    visibility: visible;
+    pointer-events: all;
+    clip-path: inset(100% 0% 0% 0%);
+  }
+  [data-loader-bg] {
+    div {
+      background-color: var(--color-acc);
+    } 
+  }
+  [data-loader-logo] {
+    opacity: 0;
+  }
+  [data-counter] {
+    display: block;
+    transform: translateY(2em);
+  }
+}
+html[data-transition-out] {
+  [data-loader] {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+  [data-loader-bg] {
+/*    transform-origin: center left;*/
+/*    transform: scaleX(1);*/
+/*    --p: 1;*/
+/*    background-color: var(--color-dark);*/
+
+    div {
+/*      transform: scaleY(1);*/
+      transform-origin: top center;
+      background-color: var(--color-dark);
+    }
+  }
+}
+

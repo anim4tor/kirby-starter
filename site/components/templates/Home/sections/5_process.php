@@ -1,0 +1,1 @@
+<?= snippet('templates/globals/Process/cards') ?>

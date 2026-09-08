@@ -1,0 +1,66 @@
+/*  
+
+    ICON
+
+*/
+:root {
+    --icon-size: 26px;
+}
+icon, .icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+/*        width: 100%;*/
+/*        height: 100%;*/
+        path {
+            fill: currentColor;
+            stroke: currentColor;
+        }
+    }
+
+    &.large {
+        --icon-size: 36px;
+    }
+}
+
+.icon {
+    &.--circle {
+        display: inline-block;
+        vertical-align: middle;
+        width: 0.8em;
+        height: 0.8em;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: currentColor;
+    }
+    &.--open {
+        svg {
+            clip-path: inset(20% 20% 20% 20%);
+        }
+    }
+}
+
+[data-tab]:hover .icon,
+[href]:hover .icon {
+    &.--open svg path {
+/*        transform: translate(25%, -25%);*/
+        animation: icon-open 600ms ease-in-out;
+    }
+}
+
+@keyframes icon-open {
+    49.9999% {
+        transform: translate(100%);
+    }
+    50% {
+        transform: translate(-100%);
+    }
+    0% {
+        transform: translate(0%, 0%);
+    }
+}

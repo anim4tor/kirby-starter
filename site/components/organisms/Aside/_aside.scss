@@ -1,0 +1,114 @@
+/*
+
+	ORGANISM: Aside
+	
+*/
+@import "../../atoms/Media/media";
+@import "../../atoms/Animation/animation";
+@import "../../atoms/Theme/border";
+:root {
+	
+}
+
+aside,
+[data-aside] {
+	backdrop-filter: blur(0rem) brightness(1);
+	
+	[data-aside-widget] {
+		overflow-y: auto;
+		
+		@include animation((clip-path), 600ms);
+		transition-delay: var(--delay);
+		clip-path: inset(0% 0% 100% 0%);
+
+		[data-pane-container] {
+			@include animation((height, width), 600ms);
+		}
+	}
+}
+
+[data-aside] {
+	--delay: 100ms;
+	z-index: 999;
+	visibility: hidden;
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	@include animation;
+	transition-duration: 600ms;
+}
+
+	[data-aside-reveal] {
+		@include animation;
+		visibility: hidden;
+		transition-delay: var(--out-delay);
+		--delay: 0ms;
+
+	    @for $i from 1 through 12 {
+	    	&:nth-child(#{$i}) {
+	    	  --out-delay: calc(var(--delay, 0) + #{$i} * 100ms);
+	    	}
+	    }
+		transform: rotate(-30deg) scale(0);
+
+		[data-word] {
+		    @include animation((transform, clip-path));
+		    transition-delay: var(--out-delay);
+
+		    display: inline-block;
+		    line-height: 1em;
+
+		    transform: translateY(2em);
+		    clip-path: inset(-120% -10% 120% -10%);
+		}
+	}
+
+	[data-aside-hide] {
+		@include animation;
+		transition-delay: var(--out-delay);
+		--delay: 200ms;
+		@for $i from 1 through 12 {
+			&:nth-child(#{$i}) {
+			  --out-delay: calc(var(--delay, 0) + #{$i} * 100ms);
+			}
+		}
+		visibility: visible;
+		transform: rotate(0deg) scale(1);
+	}
+
+[aside-open] {
+	
+	[data-aside] {
+		visibility: visible;
+		pointer-events: all;
+		backdrop-filter: blur(1rem) brightness(0.7);
+		
+		[data-aside-widget] {
+			transition-delay: 0ms;
+			clip-path: inset(0% 0% 0% 0%);
+		}
+	}
+
+	[data-aside-reveal] {
+		visibility: visible;
+		transform: rotate(0deg) scale(1);
+		--delay: 200ms;
+
+		[data-word] {
+			opacity: 1;
+			transform: none;
+			clip-path: inset(0% 0% 0% 0%);
+			visibility: visible;
+		}
+	}
+
+	[data-aside-hide] {
+		visibility: hidden;
+		--delay: 0ms;
+		transform: rotate(-30deg) scale(0);
+	}
+}
+
+[data-aside-toggle] {
+	cursor: pointer;
+}

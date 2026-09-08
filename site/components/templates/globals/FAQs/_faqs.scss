@@ -1,0 +1,55 @@
+/*
+
+  FAQS
+
+*/
+
+.faq__item {
+  collapsible {
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, calc(0% + Max(1rem, 1vw)) 100%, 0 calc(100% - Max(1rem, 1vw)));
+    
+  }
+  collapsible:hover {
+     background-color: rgba(var(--col),1);
+     color: rgba(var(--background),1);
+     border: none;
+/*     color: color(invert);*/
+  }
+  collapsible[open] {
+    background-color: color(dark);
+    color: color(invert);
+    border: none;
+    --col: #{toRGB(color(invert))};
+    detail {
+      border-top: 1px dashed rgba(var(--col),0.2);
+    }
+  }
+
+  ul {
+    li {
+      font-size: var(--font-size-md);
+      border-bottom: 1px dashed rgba(var(--col),.2);
+      padding: calc(1*var(--pad)) 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      strong {
+        padding-right: calc(5*var(--pad));
+        @include font-label;
+      }
+    }
+  }
+}
+
+[theme=dark] .faq__item {
+  
+  collapsible[open] {
+    background-color: color(invert);
+    color: color(dark);
+    border: none;
+    --col: #{toRGB(color(dark))};
+    detail {
+      border-top: 1px dashed rgba(var(--col),0.2);
+    }
+  }
+
+}

@@ -1,0 +1,129 @@
+/*
+	BETWEEN
+*/
+	/**
+	 * Computes a CSS calc function that betweens a value from
+	 * A to B over viewport-width A to viewport-width B.
+	 * Requires a media query to cap the value at B.
+	 */
+
+	@function between($from, $to, $fromWidth, $toWidth) {
+	  $slope: ($to - $from) / ($toWidth - $fromWidth);
+	  $base: $from - $slope * $fromWidth;
+
+	  @return calc(#{$base} + #{100vw * $slope});
+	}
+
+
+$display-wide: 1920;
+$display-narrow: 478;
+
+@mixin fluid($property, $minValue, $maxValue) {
+  $x: ($maxValue - $minValue)/($display-wide - $display-narrow);
+  $y: $maxValue - $display-wide * $x;
+  #{$property}: calc(#{100*$x}vw + #{$y}px);
+}
+
+/*
+	ROTATED TEXT
+*/
+
+	@mixin rotated-text($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+		$angle-per-char: $angle-span / $num-letters;
+		@for $i from 1 through $num-letters {
+			.radial-char:nth-child(#{$i}) {
+				transform: rotate($angle-offset + $angle-per-char * $i);
+			}
+		}
+	}
+
+	@mixin rotated-text-inner($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+		$angle-per-char: $angle-span / $num-letters;
+		@for $i from 1 through $num-letters {
+			.radial-char:nth-child(#{$i}) {
+				transform: scaleY(-1) rotate($angle-offset + $angle-per-char * $i);
+			}
+		}
+	}
+
+/*
+	RUNDOM NUMBER BEETWEEN
+*/
+	@function randomNum($min, $max) {
+	  $rand: random();
+	  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+	  @return $randomNum;
+	}
+
+
+
+	/*
+	///////////////////////////////////////////////////////////
+	// Plain SASS Trigonometry Algorithm in Taylor Expansion //
+	//                                                       //
+	// Based on                                              //
+	//      http://japborst.net/posts/sass-sines-and-cosines //
+	///////////////////////////////////////////////////////////*/
+
+	$pi: 3.14159265359;
+	$_precision: 10;
+
+	@function pow($base, $exp) {
+	  $value: $base;
+	  @if $exp > 1 {
+	    @for $i from 2 through $exp {
+	      $value: $value * $base;
+	    }
+	  }
+	  @if $exp < 1{
+	    @for $i from 0 through -$exp {
+	      $value: $value / $base;
+	    }
+	  }
+	  @return $value;
+	}
+
+	@function fact($num) {
+	  $fact: 1;
+	  @if $num > 0{
+	    @for $i from 1 through $num {
+	      $fact: $fact * $i;
+	    }
+	  }
+	  @return $fact;
+	}
+
+	@function _to_unitless_rad($angle) {
+	  @if unit($angle) == "deg" {
+	    $angle: $angle / 180deg * $pi;
+	  }
+	  @if unit($angle) == "rad" {
+	    $angle: $angle / 1rad;
+	  }
+	  @return $angle;
+	}
+
+	@function sin($angle){
+	  $a: _to_unitless_rad($angle);
+	  $sin: $a;
+	  @for $n from 1 through $_precision {
+	    $sin: $sin + (pow(-1, $n) / fact(2 * $n + 1) ) * pow($a, (2 * $n + 1));
+	  }
+	  @return $sin;
+	}
+
+	@function cos($angle){
+	  $a: _to_unitless_rad($angle);
+	  $cos: 1;
+	  @for $n from 1 through $_precision {
+	    $cos: $cos + ( pow(-1,$n) / fact(2*$n) ) * pow($a,2*$n);
+	  }
+	  @return $cos;
+	}
+
+	@function tan($angle){
+	  @return sin($angle) / cos($angle);
+	}
+
+	

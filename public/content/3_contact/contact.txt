@@ -1,0 +1,11 @@
+﻿Title: Kontakt
+----
+Headline: Spojte se s nĂˇmi
+----
+Text: MĂˇte nĂˇpad na projekt nebo se chcete jen na nÄ›co zeptat? NapiĹˇte nĂˇm nebo zavolejte.
+----
+Email: info@example.com
+----
+Phone: +420 123 456 789
+----
+Address: PĹ™Ă­kladovĂˇ 123, 110 00 Praha

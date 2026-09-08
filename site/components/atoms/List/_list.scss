@@ -1,0 +1,29 @@
+/* 
+
+	ATOMS: List 
+
+*/
+@import "../Animation/animation";
+
+:root {
+	
+}
+
+ul {
+	list-style-type: disc;
+	li {
+	    font-size: var(--output-size);
+	    font-family: var(--font-family-body);
+	    font-weight: var(--font-weight-body);
+	    letter-spacing: -0.035em;
+	}
+}
+ol {
+	list-style-type: none;
+}
+.block__list li {
+	&:before {
+		content: '—';
+		margin-right: 0.5em;
+	}
+}

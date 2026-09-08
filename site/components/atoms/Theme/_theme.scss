@@ -1,0 +1,71 @@
+:root {
+    /* ==========================================================================
+       TYPOGRAPHY BRANDING FRAMEWORK TOKENS
+       ========================================================================== */
+    --ff-heading:              'Inter';
+    --fw-heading:              500;
+    --tt-heading:              none;
+    --ls-heading:              -0.035em;
+    --ff-body:                 'Inter';
+    --fw-body:                 500;
+    --tt-body:                 uppercase;
+    --ls-body:                 -0.035em;
+    --ff-mono:                 'Inter';
+
+    /* ==========================================================================
+       FLUID RESPONSIVE SCALE ENGINE TOKENS
+       ========================================================================== */
+    --type-scale:              1.618;
+    --type-start-rem:          1rem;
+    --type-start-vw:           1.3vw;
+    --base-line-height:        1.1;
+    --body-scale:              1.222;
+    --body-start-rem:          0.7rem;
+    --body-start-vw:           0.65vw;
+    --base-body-line-height:   1.5;
+
+    /* ==========================================================================
+       LAYOUT PADDING & GRID SPACING TOKENS
+       ========================================================================== */
+    --scale-min:               1;
+    --scale-fluid:             2;
+    --scale:                   1;
+    --spacing:                 calc(var(--amount, 1) * var(--scale-fluid) * 1vw * var(--scale));
+
+    /* ==========================================================================
+       GLOBAL INTERACTIVE ANIMATIONS TOKENS
+       ========================================================================== */
+    --animation-duration:      1000ms;
+    --animation-delay:         0ms;
+    --animation-stagger:       50ms;
+    --animation-timing:        cubic-bezier(0.4,0,0.2,1);
+
+    --toggle-parallax:         1;
+    --toggle-reveals:          1;
+
+    /* ==========================================================================
+       ACTIVE THEME PALETTE MATRIX TOKENS
+       ========================================================================== */
+    --color-acc:               #ED1359;
+    --color-light:             #EDECE7;
+    --color-dark:              #000000;
+    --color-text:              #151314;
+    --color-black:             #000000;
+    --color-white:             #FFFFFF;
+    --color-invert:            #FFFFFF;
+    --color-delay:             300ms;
+
+    /* ==========================================================================
+       IMAGE STYLING TOKENS
+       ========================================================================== */
+    --img-radius:              0.75;
+    --radius:                  1.5;
+
+    /* ==========================================================================
+       BUTTON COMPONENTS TOKENS
+       ========================================================================== */
+    --btn-padding:             0.5rem 1rem;
+    --btn-radius:              4px;
+    --btn-border:              1px;
+}
+

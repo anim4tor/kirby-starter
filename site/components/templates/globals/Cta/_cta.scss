@@ -1,0 +1,30 @@
+.cta .bg {
+  width: 100%;
+/*  height: 100vh;*/
+  --dist: calc(var(--y, 0) * 50deg);
+  --angle: calc(-1 * var(--x, 0) * 10deg);
+  @include animation;
+  background: 
+    /* The sharp beam effect */
+    linear-gradient(
+      110deg,
+      var(--color-dark) 50%,
+      transparent 120%
+    ),
+    conic-gradient(
+      from calc(var(--angle) + 130deg) at 40% 0%, 
+      var(--color-acc) 0deg, 
+      transparent var(--dist)
+    ),
+    conic-gradient(
+      from calc(var(--angle) + 110deg) at 50% 0%, 
+      var(--color-acc) 0deg, 
+      transparent var(--dist)
+    ),
+    conic-gradient(
+      from calc(var(--angle) + 90deg) at 60% -5%, 
+      var(--color-acc) 0deg, 
+      transparent var(--dist)
+    ),
+    var(--color-dark);
+}

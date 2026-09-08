@@ -1,0 +1,96 @@
+/*	
+
+	SPACING
+
+*/
+@import "../Media/media";
+:root {
+
+}
+
+$limit: 20;
+$dirs: ( 
+	'': '',
+	x: inline,
+	y: block,
+	t: top,
+	r: right,
+	b: bottom,
+	l: left
+);
+
+@mixin spacing_scale($props, $var: spacing, $min: 0, $max: $limit) {
+  @each $label, $dir in $dirs {
+    @if($label == '') {
+      $neg: 1;
+      @for $i from $min through $max {
+        @if($i < 0) {
+          $neg: -1;
+        } 
+        &__#{$neg*$i} {
+          @each $prop in $props {
+            #{$prop}: calc(#{$i} * var(--#{$var}));
+          }
+        }
+      } 
+      @for $j from 1 through 9 {
+        &__0#{$j} {
+          @each $prop in $props {
+            #{$prop}: calc(#{$neg*$j/10} * var(--#{$var}));
+          }
+        }
+      } 
+    } @else {
+      $neg: 1;
+      @for $i from $min through $max {
+        @if($i < 0) {
+          $neg: -1;
+        } 
+        &-#{$label}__#{$neg*$i} {
+          @each $prop in $props {
+              #{$prop}-#{$dir}: calc(#{$i} * var(--#{$var}));
+          }
+        }
+      } 
+      @for $j from 1 through 9 {
+        &-#{$label}__0#{$j} {
+          @each $prop in $props {
+            #{$prop}-#{$dir}: calc(#{$neg*$j/10} * var(--#{$var}));
+          }
+        }
+      } 
+    }
+  }
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+	@if($modifier == '') {
+		.wrap {
+			@include spacing_scale( ( margin ), spacing, 0, 20 );
+		}
+		.inner {
+			@include spacing_scale( ( padding ), spacing, 0, 20 );
+		}
+		.-wrap {
+			@include spacing_scale( ( margin ), spacing, -20, -1 );
+		}
+		.-inner {
+			@include spacing_scale( ( padding ), spacing, -20, -1 );
+		}
+	} @else {
+		@include create-mq($breakpoint, 'max') {
+			.#{$modifier}\:wrap {
+				@include spacing_scale( ( margin ), spacing, 0, 20 );
+			}
+			.#{$modifier}\:inner {
+				@include spacing_scale( ( padding ), spacing, 0, 20 );
+			}
+			.#{$modifier}\:-wrap {
+				@include spacing_scale( ( margin ), spacing, -20, -1 );
+			}
+			.#{$modifier}\:-inner {
+				@include spacing_scale( ( padding ), spacing, -20, -1 );
+			}
+		}
+	}
+}

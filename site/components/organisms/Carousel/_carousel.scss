@@ -1,0 +1,138 @@
+/*
+
+	TOGGLES
+
+*/
+
+carousel {
+	display: block;
+}
+[data-carousel] {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+[data-carousel-slides] {
+	width: 100%;
+	min-width: 0;
+}
+
+[data-carousel-scroll] {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+	[data-slide] {
+/*		visibility: hidden;*/
+/*		width: 100%;*/
+/*		position: relative;*/
+		flex-shrink: 0;
+
+
+		@include animation;
+/*		opacity: 0;*/
+
+		&[data-active] {
+			visibility: visible;
+			transform: none;
+			opacity: 1;
+		}
+	}
+
+.carousel__arrows {
+	--size: 0.6rem;
+	--inset: 2;
+	--gap: 0.5;
+	padding: calc(var(--pad) * var(--inset)/2) calc(var(--pad) * var(--inset));
+	z-index: 1;
+	position: absolute;
+	inset: var(--position, auto 0 0 auto);
+}
+
+.carousel__hoverable {
+	@include xs-screen {
+		display: none;
+	}
+}
+
+.carousel__breadcrumbs {
+	--size: 0.6rem;
+	--inset: 2;
+	--gap: 0.5;
+	padding: calc(var(--pad) * var(--inset)/2) calc(var(--pad) * var(--inset));
+	z-index: 1;
+	position: absolute;
+	inset: var(--position, auto 0 0 auto);
+	flex-wrap: nowrap;
+
+	.bread {
+		position: relative;
+		gap:  calc(var(--pad) * var(--gap))
+	}
+		.crumb {
+			opacity: 0.1;
+			width: var(--size);
+			height: var(--size);
+			background-color: currentColor;
+
+		}
+	.walker {
+		opacity: 1;
+		position: absolute;
+		background-color: currentColor;
+		top: calc(var(--pad) * var(--inset)/2);
+		left: calc(var(--pad) * var(--inset) + var(--active) * var(--pad) * var(--gap) + var(--active) * var(--size));
+		@include animation;
+	}
+}
+
+[data-active-reveal] {
+	@include animation;
+	&:not([data-reveal-lines]){
+		will-change: clip-path;
+		clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+	}
+	&[data-reveal-lines] [data-word] {
+		display: inline-block;
+		overflow: hidden;
+		margin: -0.25em 0;
+		line-height: 1;
+		span {
+			@include animation(transform);
+			display: inline-block;
+			will-change: transform;
+			transform: translateY(120%);
+		}
+	}
+}
+[data-carousel] [data-active] [data-active-reveal] {
+	&:not([data-reveal-lines]){
+		transition-delay: 400ms;
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+	}
+	&[data-reveal-lines] {
+		visibility: visible;
+		[data-word] span {
+			transform: none;
+			transition-delay: calc(var(--word-index) * 20ms);
+		}
+	}
+}
+
+/* Zamezí nativnímu přetahování prvků prohlížečem */
+[data-carousel] img,
+[data-carousel] a {
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Když se aktivuje drag, pro jistotu kompletně vypneme pointer-events na celém vnitřku */
+[data-carousel].is-dragged a {
+    pointer-events: none;
+}

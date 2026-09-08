@@ -1,5 +1,1 @@
-﻿<?php snippet('layout', slots: true) ?>
-
-<?php snippet('organisms/Contact') ?>
-
-<?php endsnippet() ?>
+﻿<?= snippet('organisms/Html',[ 'page' => $page ]) ?>

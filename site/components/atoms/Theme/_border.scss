@@ -1,0 +1,94 @@
+/* 
+
+  BORDERS 
+
+*/
+@import "../Media/media";
+
+:root {
+  --border-width: 1.5px;
+  --radius: 1.5;
+}
+
+$directions : (
+  ''        : '',
+  __left    : '-left',
+  __right   : '-right',
+  __top     : '-top',
+  __bottom  : '-bottom',
+); 
+$opacity : (
+  0     : 0.0,
+  1     : 0.1,
+  2     : 0.2,
+  3     : 0.3,
+  4     : 0.4,
+  5     : 0.5,
+  6     : 0.6,
+  7     : 0.7,
+  8     : 0.8,
+  9     : 0.9,
+  10    : 1.0,
+);
+
+@mixin border($direction : '', $alpha : 20%) {
+  @if($direction == '') {
+    border: var(--border-width) solid color-mix(in srgb, var(--col) #{$alpha}, transparent);
+  } @else {
+    border#{$direction}: var(--border-width) solid color-mix(in srgb, var(--col) #{$alpha}, transparent);
+  }
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+  @if($modifier == '') {
+    @each $dLabel, $direction in $directions {
+      .border#{$dLabel} {
+          @include border($direction);
+      }
+      @each $aLabel, $alpha in $opacity {
+        .border#{$dLabel}\/#{$aLabel} {
+            @include border($direction, $alpha);
+        }
+      }
+    }
+  } @else {
+    @include create-mq($breakpoint, 'max') {
+      @each $dLabel, $direction in $directions {
+        .#{$modifier}\:border#{$dLabel} {
+            @include border($direction);
+        }
+        @each $aLabel, $alpha in $opacity {
+          .#{$modifier}\:border#{$dLabel}\/#{$aLabel} {
+              @include border($direction, $alpha);
+          }
+        }
+      }
+    }
+  }
+}
+
+html body hr {
+  border: none;
+  @include border(bottom);
+  margin: 0;
+  padding: 0;
+  height: 0;
+}
+
+.dashed {
+  border-style: dashed;
+}
+.dotted {
+  border-style: dotted;
+}
+
+@mixin radius {
+  border-radius: calc(var(--radius)*1em);
+  overflow: hidden;
+}
+.radius {
+  @include radius;
+}
+.circle {
+  border-radius: 50%;
+}

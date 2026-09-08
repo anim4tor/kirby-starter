@@ -1,0 +1,320 @@
+/*
+
+	MODAL
+
+*/
+@import "../../atoms/Media/media";
+@import "../../atoms/Animation/animation";
+
+[data-modal-open], [data-modal-close] {
+	cursor: pointer;
+}
+
+:root {
+	--modal-width: 60vw;
+	--modal-offset: calc(var(--spacing)*2);
+	--modal-height: calc(100dvh - var(--modal-offset));
+	@include xs-screen {
+		--modal-width: 100vw;
+	}
+}
+
+
+.modal {
+
+	&__layout {
+		z-index: 10003;
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		width: 100vw;
+
+		display: grid;
+		align-content: end;
+		pointer-events: none;
+
+	}
+
+		&__overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100vw;
+			height: 100dvh;
+/*			background-color: rgba(var(--color-dark),.4);*/
+			@include animation;
+			opacity: 0;
+
+/*			backdrop-filter: blur(30px);*/
+		}
+
+		&__widget {
+			grid-column: 1;
+			grid-row: 1;
+			
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr;
+
+			height: var(--modal-height);
+			border-radius: var(--card-radius) var(--card-radius) 0 0;
+			overflow: hidden;
+
+			position: relative;
+
+			&:before {
+				z-index: 1;
+				content: '';
+				position: absolute;
+				inset: calc(var(--spacing)*0.5) 40% auto;
+				width: 20%;
+				height: 3px;
+				border-radius: 3px;
+				background-color: currentColor;
+			}
+
+		}
+
+		&__notification {
+			&:before {
+				z-index: 1;
+				content: '';
+				position: absolute;
+				inset: calc(var(--spacing)*0.5) 40% auto;
+				width: 20%;
+				height: 3px;
+				border-radius: 3px;
+				background-color: currentColor;
+			}
+		}
+
+	
+			& {
+				overflow-y: scroll;
+				background: var(--color-dark);
+				.modal__close {
+					position: relative;
+					inset: auto;		
+				}
+			}
+			
+			
+				&__inner {
+					grid-template-rows: auto 1fr;
+					height: 100%;
+					animation: var(--animation);	
+					animation-duration: var(--modal-duration);	
+					animation-timing-function: var(--modal-easing);	
+				}
+
+				&__close {
+					position: fixed;
+					right: calc(var(--pad));
+					top: calc(var(--pad)*0.5);
+					@include animation;
+
+					a {
+						letter-spacing: 0.3em;
+						text-transform: uppercase;
+						font-weight: 300 !important;
+						@include xs-screen {
+							font-size: 0.6rem;
+						}
+					}
+
+					@include xs-screen {
+						z-index: 1;
+						position: absolute;
+						top: calc(var(--pad)*1);
+					}
+
+				}
+
+			&__main {
+				height: 100dvh;
+				width: var(--modal-width);
+				overflow-y: scroll;
+				grid-column: 1;
+				grid-row: 1;
+
+
+				
+			}
+
+			&__fullheight {
+				height: calc(100vh);
+				height: calc(100dvh);
+			}
+
+			&__header {
+				height: var(--header-height);
+			}
+
+			&__form {
+/*				padding: 7rem 0 0;*/
+			}
+
+			
+			
+		
+}
+
+html {
+	
+	.modal {
+		&__layout {
+			@include animation(transform);
+/*			visibility: hidden;*/
+			pointer-events: none;
+			transform: scale(1.1);
+		}
+		
+		&__widget {
+			@include animation(transform);
+			transform: translateY(calc(1*100%));
+		}
+
+		&__content {
+			display: grid;
+			overflow: hidden;
+			height: calc(100dvh - var(--modal-offset));
+			grid-template-rows: auto 1fr auto;
+		}
+		&__scroll {
+			overflow-y: scroll;
+		}
+		&__close {
+			opacity: 0;
+			transform: translateX(calc(1*var(--pad)));
+		}
+
+	}
+}
+
+html.has-modal {
+	[data-app] {
+		transform: scale(0.9) translateY(-2rem);
+		background: rgba(var(--color-white),0.2);
+		border-radius: var(--card-radius);
+		overflow: hidden;
+
+		card, button, a.button {
+			transform: scale(0.75);
+			opacity: 0;
+		}
+		header {
+			opacity: 0;
+		}
+	}
+	.modal {
+
+		&__layout {
+/*			visibility: visible;*/
+			pointer-events: all;
+			transform: none;
+		}
+
+		&__overlay {
+			opacity: 1;
+			pointer-events: all;
+		}
+		
+		&__widget {
+			transform: translateY(0%);
+		}
+		&__close {
+			opacity: 1;
+			transform: none;
+			transition-delay: 400ms;
+
+		}
+
+	}
+}
+
+html.no-scroll {
+	body {
+		height: 100dvh;
+		overflow: hidden;
+	}
+}
+
+
+/*[modal-widget] {
+	[modal-load] {
+	}
+	[modal-next] {
+		z-index: 1;
+		transform: translateX(100%);
+	}
+	&[next], &[prev] {
+		[modal-load],
+		[modal-next] {
+			position: relative;
+			display: block;
+			@include animation(transform);
+		}
+	}
+	&[next] {
+		[modal-load] {
+			transform: translateX(-100%);
+		}
+		[modal-next] {
+			animation: nextModal $defaultDuration $defaultEasing;
+		}
+	}
+	&[prev] {
+		[modal-load] {
+			transform: translateX(100%);
+		}
+		[modal-next] {
+			animation: prevModal $defaultDuration $defaultEasing;
+		}
+	}
+}*/
+
+[modal] {
+	position: relative;
+	display: block;
+	@include animation(transform);
+	&[close-next] {
+		transform: translateX(-100%);
+	}
+	&[close-prev] {
+		transform: translateX(100%);
+	}
+	&[open-next] {
+		animation: nextModal $defaultDuration $defaultEasing;
+	}
+	&[open-prev] {
+		animation: prevModal $defaultDuration $defaultEasing;
+	}
+}
+
+@keyframes prevModal {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: none;
+	}
+}
+@keyframes nextModal {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: none;
+	}
+}
+
+.rows__1-auto {
+	grid-template-rows: 1fr auto;
+}
+.rows__auto-1 {
+	grid-template-rows: auto 1fr;
+}

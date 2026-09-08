@@ -1,14 +1,19 @@
-﻿<section class="contact-section">
-  <div class="contact-grid">
-    <div class="contact-info">
-      <?php snippet('atoms/Heading', ['level' => 'h2', 'text' => 'NapiĹˇte nĂˇm']) ?>
-      <p>MĂˇte dotaz nebo zĂˇjem o spoluprĂˇci? NevĂˇhejte nĂˇs kontaktovat.</p>
-    </div>
-    <form class="contact-form" method="POST" action="">
-      <?php snippet('atoms/Input', ['name' => 'name', 'label' => 'JmĂ©no a pĹ™Ă­jmenĂ­', 'required' => true]) ?>
-      <?php snippet('atoms/Input', ['name' => 'email', 'type' => 'email', 'label' => 'VĂˇĹˇ e-mail', 'required' => true]) ?>
-      <?php snippet('atoms/Input', ['name' => 'message', 'type' => 'textarea', 'label' => 'ZprĂˇva', 'required' => true]) ?>
-      <?php snippet('atoms/Button', ['label' => 'Odeslat zprĂˇvu', 'type' => 'submit', 'style' => 'primary']) ?>
-    </form>
-  </div>
-</section>
+<div>
+	<div fab data-scroll class="fixed inset__bottom-right inner__1" data-contact-hide>
+		<div class="flex" style="--in-delay: 1000ms" data-reveal>
+			<button class="button bg__acc " theme="acc" hover="dark" data-contact-toggle >
+				<div icon class="grid__stack place__center-center color__invert ">
+					<div class="grid place__center-center -wrap-l__01"><?= svg('public/assets/images/ui/ui_contact.svg') ?></div>
+				</div>
+				<label class="upper"><div>
+					<span class="flex inner-r__1"><?= !in_array($page->intendedTemplate(), ['job']) ? 'Start project' : 'Apply for job' ?></span>
+				</div></label>
+			</button>
+		</div>
+	</div>
+	<section class="contact fixed" data-scroll data-contact data-lenis-prevent>
+		<div class="grid place__end-end inner__1 h__100v" >
+			<?php !in_array($page->intendedTemplate(), ['job']) ? snippet('organisms/Contact/widget') : snippet('organisms/Contact/career') ?>
+		</div>
+	</section>
+</div>

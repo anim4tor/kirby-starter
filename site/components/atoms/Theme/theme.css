@@ -1,0 +1,127 @@
+.is-hidden {
+	display: none !important;
+}
+/* Tab navigation layout styling */
+.theme-tab-nav {
+	display: flex;
+	gap: 0.2rem;
+	width: 100%;
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+	padding-bottom: 0.5rem;
+	margin-bottom: 0.75rem;
+	overflow: hidden; 
+}
+.theme-tab-btn {
+	flex: 1;
+	text-align: center;
+	white-space: nowrap;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.4);
+	border: none;
+	padding: 0.35rem 0.6rem;
+	font-family: sans-serif;
+	font-size: 0.7rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	cursor: pointer;
+	border-radius: 3px;
+	transition: all 0.2s ease;
+}
+.theme-tab-btn:hover {
+	color: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 0.05);
+}
+.theme-tab-btn.is-active {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.15);
+}
+/* Typography Section Separators */
+.typo-section-header {
+	grid-column: span 2;
+	font-size: 0.65rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: rgba(255, 255, 255, 0.6);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 0.25rem;
+	margin-top: 0.5rem;
+	margin-bottom: 0.25rem;
+}
+.typo-section-header:first-child {
+	margin-top: 0;
+}
+/* Clean wrapping for color picker grids */
+.color-picker-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem;
+	width: 100%;
+}
+.color-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: rgba(255,255,255,0.03);
+	padding: 0.4rem;
+	border-radius: 4px;
+	border: 1px solid rgba(255,255,255,0.05);
+}
+.color-item label {
+	margin-bottom: 0.25rem;
+	text-align: center;
+	width: 100%;
+}
+.color-item input[type="color"] {
+	width: 100%;
+	height: 28px;
+	padding: 0;
+	border: 1px solid rgba(255,255,255,0.1);
+	cursor: pointer;
+	background: transparent;
+	border-radius: 2px;
+}
+.theme-panel-row {
+	display: flex;
+	gap: 0.5rem;
+	width: 100%;
+}
+.theme-panel-row .grid {
+	flex: 1;
+}
+/* Action Icon Toggle Button Styles */
+#theme-toggle-btn .icon-close {
+	display: none;
+}
+#theme-toggle-btn.is-open .icon-settings {
+	display: none;
+}
+#theme-toggle-btn.is-open .icon-close {
+	display: block;
+}
+/* Update your CSS selector to target both unique buttons */
+#theme-toggle-btn,
+#panel-link-btn {
+	margin-bottom: 0; /* Clears the bottom margin inside the flex container */
+	background: rgba(0,0,0,0.6); 
+	color: #fff; 
+	border: 1px solid rgba(255,255,255,0.2); 
+	width: 34px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px; 
+	cursor: pointer; 
+	transition: all 0.2s ease;
+	padding: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+#theme-toggle-btn:hover,
+#panel-link-btn:hover {
+	background: rgba(0,0,0,0.8);
+	border-color: rgba(255,255,255,0.4);
+}

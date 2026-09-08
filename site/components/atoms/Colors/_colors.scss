@@ -1,0 +1,54 @@
+/*
+
+	BACKGROUND
+	
+*/
+:root {
+
+}
+
+$map-grid-props: (
+    '': $screen-desktop,
+    'desktop': $screen-desktop,
+    'laptop': $screen-laptop,
+    'tablet': $screen-tablet,
+    'mobile': $screen-mobile,
+);
+
+.bg__color {
+	background-color: var(--bg-color);
+}
+.color {
+	color: var(--color);
+}
+@each $modifier , $breakpoint in $map-grid-props {
+	@if($modifier == '') {
+		@for $i from 1 through 20 {
+		
+			.bg__#{$i} {
+				grid-column: #{$i};
+			}
+			.color__#{$i} {
+				grid-row: #{$i};
+			}
+		}
+	} @else {
+	  @include create-mq($breakpoint, 'max') {
+	    @for $i from 1 through 20 {
+	    	
+				.#{$modifier}\:col__#{$i} {
+					grid-column: #{$i};
+				}
+				.#{$modifier}\:row__#{$i} {
+					grid-row: #{$i};
+				}
+  			.#{$modifier}\:span__#{$i} {
+					grid-column: span #{$i};
+				}
+				.#{$modifier}\:span__row__#{$i} {
+					grid-row: span #{$i};
+				}
+  		}
+	  }
+	}
+}

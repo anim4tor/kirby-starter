@@ -1,0 +1,184 @@
+/*  
+
+  SIZE
+
+*/
+@import "../Media/media";
+
+:root {
+
+}
+
+$limit: 30;
+$aspect: (
+  widescreen: 16/9, 
+  square: 1/1, 
+  portrait: 2/3, 
+  landscape: 3/2, 
+  tv: 2/1
+);
+
+@mixin size_scale($prop, $max: $limit, $unit: var(--spacing)) {
+  @for $i from 1 through $max {
+    &__#{$i} {
+      #{$prop}: calc(#{$i} * #{$unit});
+      flex-shrink: 0;
+    }
+  } 
+  @for $i from 1 through 9 {
+    &__0#{$i} {
+      #{$prop}: calc(#{$i/10} * #{$unit});
+    }
+  } 
+}
+
+@mixin aspect($mode: true) {
+  @if($mode == 'spacing') {
+    @for $w from 1 through 16 {
+      @for $h from 1 through 16 {
+        &__#{$w}\/#{$h} {
+          --aspect-ratio: #{$w}/#{$h};
+        }
+      }
+    }
+  } @else {
+    @each $label, $value in $aspect {
+      &__#{$label} {
+        --aspect-ratio: #{$value};
+      }
+    }
+  }
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+  @if($modifier == '') {
+    .w {
+      @include size_scale(width);
+    }
+    .h {
+      @include size_scale(height);
+    }
+
+    .vw {
+      @include size_scale(width, 20, calc(100/20)+'vw');
+    }
+    .vh {
+      @include size_scale(height, 20, calc(100/20)+'dvh');
+    }
+
+    .\%w {
+      @include size_scale(width, 20, calc(100/20)+'%');
+    }
+    .\%h {
+      @include size_scale(height, 20, calc(100/20)+'%');
+    }
+
+    .min-w {
+      @include size_scale(min-width);
+    }
+    .min-h {
+      @include size_scale(min-height);
+    }
+
+    .max-w {
+      @include size_scale(max-width);
+    }
+    .max-h {
+      @include size_scale(max-height);
+    }
+
+    .aspect {
+      @include aspect;
+      @include aspect(spacing);
+    }
+
+    .h__100v {
+      height: 100vh;
+    }
+
+    .w__100v {
+      width: 100vw;
+    }
+
+    .no__overflow {
+      overflow: hidden;
+    }
+    .no__x-overflow {
+      overflow-x: hidden;
+    }
+
+    .h__auto {
+      height: auto;
+    }
+
+    .w__auto {
+      width: auto;
+    }
+
+  } @else {
+    @include create-mq($breakpoint, 'max') {
+      .#{$modifier}\:w {
+        @include size_scale(width);
+      }
+      .#{$modifier}\:h {
+        @include size_scale(height);
+      }
+      .#{$modifier}\:vw {
+        @include size_scale(width, 20, calc(100/20)+'vw');
+      }
+      .#{$modifier}\:vh {
+        @include size_scale(height, 20, calc(100/20)+'dvh');
+      }
+
+      .#{$modifier}\:\%w {
+        @include size_scale(width, 20, calc(100/20)+'%');
+      }
+      .#{$modifier}\:\%h {
+        @include size_scale(height, 20, calc(100/20)+'%');
+      }
+
+      .#{$modifier}\:min-w {
+        @include size_scale(min-width);
+      }
+      .#{$modifier}\:min-h {
+        @include size_scale(min-height);
+      }
+
+      .#{$modifier}\:max-w {
+        @include size_scale(max-width);
+      }
+      .#{$modifier}\:max-h {
+        @include size_scale(max-height);
+      }
+
+      .#{$modifier}\:aspect {
+        @include aspect;
+      }
+
+      .#{$modifier}\:h__100v {
+        height: 100vh;
+      }
+
+      .#{$modifier}\:w__100v {
+        width: 100vw;
+      }
+
+      .#{$modifier}\:no__overflow {
+        overflow: hidden;
+      }
+
+      .#{$modifier}\:no__x-overflow {
+        overflow-x: hidden;
+      }
+
+      .#{$modifier}\:h__auto {
+        height: auto !important;
+      }
+
+      .#{$modifier}\:w__auto {
+        width: auto !important;
+      }
+      
+    }
+  }
+}

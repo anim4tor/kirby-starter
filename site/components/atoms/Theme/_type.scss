@@ -1,0 +1,215 @@
+/*
+
+	TYPOGRAPHY
+	
+*/
+
+@import "../Media/media";
+
+/* ------------------------------------------------------------
+   THE CALCULATED SYSTEM (Applies globally, evaluates dynamically)
+   ------------------------------------------------------------ */
+:root {
+    /* Headings */
+    --font-size-5: max(calc(var(--type-start-rem) * var(--scale)), calc(var(--type-start-vw) * var(--scale)));
+    --line-height-5: var(--base-line-height);
+
+    --font-size-4: max(calc(var(--type-start-rem) * var(--type-scale) * var(--scale)), calc(var(--type-start-vw) * var(--type-scale) * var(--scale)));
+    --line-height-4: calc(var(--line-height-5) - (0.04 * var(--type-scale)));
+
+    --font-size-3: max(calc(var(--type-start-rem) * var(--type-scale) * var(--type-scale) * var(--scale)), calc(var(--type-start-vw) * var(--type-scale) * var(--type-scale) * var(--scale)));
+    --line-height-3: calc(var(--line-height-4) - (0.04 * var(--type-scale)));
+
+    --font-size-2: max(calc(var(--type-start-rem) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--scale)), calc(var(--type-start-vw) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--scale)));
+    --line-height-2: calc(var(--line-height-3) - (0.04 * var(--type-scale)));
+
+    --font-size-1: max(calc(var(--type-start-rem) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--scale)), calc(var(--type-start-vw) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--type-scale) * var(--scale)));
+    --line-height-1: calc(var(--line-height-2) - (0.04 * var(--type-scale)));
+
+    /* Body */
+    --font-size-small: max(calc(var(--body-start-rem) * var(--scale)), calc(var(--body-start-vw) * var(--scale)));
+    --line-height-small: var(--base-body-line-height);
+
+    --font-size-default: max(calc(var(--body-start-rem) * var(--body-scale) * var(--scale)), calc(var(--body-start-vw) * var(--body-scale) * var(--scale)));
+    --line-height-default: calc(var(--base-body-line-height) - (0.04 * var(--body-scale)));
+
+    --font-size-large: max(calc(var(--body-start-rem) * var(--body-scale) * var(--body-scale) * var(--scale)), calc(var(--body-start-vw) * var(--body-scale) * var(--body-scale) * var(--scale)));
+    --line-height-large: calc(var(--line-height-default) - (0.04 * var(--body-scale)));
+}
+
+
+/*
+    Levels
+*/
+
+$levels: 'small', 'default', 'large', 5, 4, 3, 2, 1;
+
+@each $modifier , $breakpoint in $map-grid-props {
+    @if($modifier =='') {
+        @each $level in $levels {
+
+            h#{$level},
+            .font__size__#{$level},
+            .font-size-#{$level} {
+                --output-size: calc(var(--font-size-#{$level}));
+                font-size: var(--output-size);
+                line-height: var(--line-height-#{$level});
+            }
+        }
+    }
+
+    @else {
+        @each $level in $levels {
+            @include create-mq($breakpoint, 'max') {
+
+                .#{$modifier}\:font__size__#{$level},
+                .#{$modifier}\:font-size-#{$level} {
+                    --output-size: calc(var(--font-size-#{$level}));
+                    font-size: var(--output-size);
+                    line-height: var(--line-height-#{$level});
+                }
+            }
+        }
+    }
+}
+
+
+
+
+/*
+    Body
+*/
+
+html {
+    font-size: 100%;
+}
+
+/*16px*/
+body {
+    --output-size: var(--font-size-default);
+    font-family: var(--ff-body);
+    font-size: var(--output-size);
+    line-height: var(--line-height-default);
+    font-weight: var(--fw-body);
+    font-optical-sizing: auto;
+}
+
+/*
+    Headings
+*/
+.ff__heading,
+.ff__heading *,
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: var(--ff-heading), sans-serif;
+    font-weight: var(--fw-heading);
+    letter-spacing: var(--ls-heading);
+    text-transform: var(--tt-heading);
+    font-optical-sizing: auto;
+}
+
+/*
+    Paragraphs
+*/
+.ff__body,
+.ff__body *,
+p,
+a,
+button {
+    font-family: var(--ff-body), sans-serif;
+    font-weight: var(--fw-body);
+    letter-spacing: var(--ls-body);
+    text-transform: var(--tt-body);
+    font-optical-sizing: auto;
+}
+
+.ff__mono,
+.ff__mono * {
+    font-family: var(--ff-mono), mono;
+}
+
+
+/*
+    Utils
+*/
+
+.text__right {
+    text-align: right;
+}
+
+.text__center {
+    text-align: center;
+}
+
+.text__left {
+    text-align: left;
+}
+
+.text__justify {
+    text-align: justify;
+}
+
+.lighter {
+    font-weight: normal;
+}
+
+.light {
+    font-weight: 100;
+}
+
+.bolder {
+    font-weight: bolder;
+}
+
+.lower,
+.lower * {
+    text-transform: none !important;
+}
+
+.upper {
+    text-transform: uppercase;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.hyphens {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    word-wrap: break-word
+}
+
+.dot {
+    --size: 2px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background-color: currentColor;
+
+    &.large {
+        --size: 0.5em;
+    }
+}
+
+.outlined {
+    -webkit-text-stroke: 0.015em rgb(var(--background));
+    letter-spacing: -0.05em;
+}
+
+::selection {
+    background: rgba(var(--color-acc), 1);
+    color: rgba(var(--color-text), 1);
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: rgba(var(--color-acc), 1);
+    color: rgba(var(--color-text), 1);
+    text-shadow: none;
+}

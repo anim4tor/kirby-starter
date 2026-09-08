@@ -1,0 +1,135 @@
+/*	
+
+	COLORS
+
+*/
+@import "../Media/media";
+:root {
+
+}
+
+/*SASS only needs to know the names to generate the classes!*/
+$colors: (
+  'prim', 'sec', 'acc', 'light', 'dark', 'text', 'black', 'white', 'invert'
+);
+
+$utils: ( 
+	inherit: inherit, 
+	current: currentcolor, 
+	transparent: transparent 
+);
+
+$alphas: (
+  5   : 5%,
+  10  : 10%,
+  20  : 20%,
+  30  : 30%,
+  40  : 40%,
+  50  : 50%,
+  60  : 60%,
+  70  : 70%,
+  80  : 80%,
+  90  : 90%,
+  100 : 100%,
+);
+$hues: (
+	
+);
+
+$opacity : (
+	/*opacity*/
+	1 		: 0.1,
+	2			: 0.2,
+	3			: 0.3,
+	4 		: 0.4,
+	5			: 0.5,
+	6			: 0.6,
+	7 		: 0.7,
+	8			: 0.8,
+	9			: 0.9,
+);
+
+@function toRGB($color) {
+    @return red($color), green($color), blue($color);
+}
+
+@mixin bg-color {
+  @each $label in $colors {
+		&__#{$label} {
+		  --background: var(--color-#{$label});
+      background-color: var(--background);
+		}
+		@each $aLabel, $alpha in $alphas {
+		 	  &__#{$label}\/#{$aLabel} {
+		  		background-color: color-mix(in srgb, var(--color-#{$label}) #{$alpha}, transparent);
+		 	  }
+		}
+  } 
+}
+
+@mixin text-color {
+  @each $label in $colors {
+		&__#{$label} {
+		  --col: var(--color-#{$label});
+      color: var(--col);
+		}
+		@each $aLabel, $alpha in $alphas {
+		 	  &__#{$label}\/#{$aLabel} {
+ 	    	  color: color-mix(in srgb, var(--color-#{$label}) #{$alpha}, transparent);
+		 	  }
+		}
+  } 
+}
+
+@mixin fill-color {
+  @each $label in $colors {
+		&__#{$label} {
+		  --fill: var(--color-#{$label});
+			fill: var(--fill);
+		}
+		@each $aLabel, $alpha in $alphas {
+		 	  &__#{$label}\/#{$aLabel} {
+ 	    	  fill: color-mix(in srgb, var(--color-#{$label}) #{$alpha}, transparent);
+		 	  }
+		}
+  } 
+}
+
+
+@each $modifier , $breakpoint in $map-grid-props {
+	@if($modifier == '') {
+		.bg {
+			@include bg-color;
+		}
+		.color {
+			@include text-color;
+		}
+		.fill {
+			@include fill-color;
+		}
+	
+	} @else {
+		@include create-mq($breakpoint, 'max') {
+			.#{$modifier}\:bg {
+				@include bg-color;
+			}
+			.#{$modifier}\:color {
+				@include text-color;
+			}
+			.#{$modifier}\:fill {
+				@include fill-color;
+			}
+		}
+	}
+}
+
+/* Theme rules remain the same... */
+[theme] {
+    color: var(--col);
+    background: var(--background);
+}
+[theme="invert"] { --background: var(--color-invert); --col: var(--color-text); }
+[theme="light"] { --background: var(--color-light); --col: var(--color-text); }
+[theme="dark"] { --background: var(--color-dark); --col: var(--color-light); }
+[theme="acc"] { --background: var(--color-acc); --col: var(--color-text); }
+[theme="transparent"] { --background: transparent; --col: var(--color-invert); }
