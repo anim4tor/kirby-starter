@@ -9,15 +9,7 @@ columns:
       intro:
         label: Úvodní text
         type: textarea
-      layout_blocks:
-        label: Obsahové bloky
-        type: blocks
-        fieldsets:
-          - heading
-          - text
-          - image
-          - button
-          - list
+      
   sidebar:
     width: 1/3
     sections:
