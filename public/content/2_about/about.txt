@@ -1,0 +1,7 @@
+﻿Title: O nĂˇs
+----
+Headline: O naĹˇem projektu
+----
+Intro: Jsme tĂ˝m zamÄ›Ĺ™enĂ˝ na modernĂ­ a efektivnĂ­ webovĂˇ Ĺ™eĹˇenĂ­ postavenĂˇ na Kirby CMS.
+----
+Text: [{"content":{"level":"h2","text":"NaĹˇe vize"},"id":"ab1","type":"heading"},{"content":{"text":"Kombinujeme ÄŤistĂ˝ design, rychlost a snadnou sprĂˇvu obsahu pro klienty i vĂ˝vojĂˇĹ™e."},"id":"ab2","type":"text"}]
