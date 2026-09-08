@@ -1,16 +1,16 @@
-﻿title: DomĹŻ
+title: Domů
 columns:
   main:
     width: 2/3
     fields:
       headline:
-        label: HlavnĂ­ nadpis
+        label: Hlavní nadpis
         type: text
       intro:
-        label: ĂšvodnĂ­ text
+        label: Úvodní text
         type: textarea
       layout_blocks:
-        label: ObsahovĂ© bloky
+        label: Obsahové bloky
         type: blocks
         fieldsets:
           - heading
@@ -23,4 +23,4 @@ columns:
     sections:
       files:
         type: files
-        headline: ObrĂˇzky strĂˇnky
+        headline: Obrázky stránky

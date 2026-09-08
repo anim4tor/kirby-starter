@@ -1,13 +1,13 @@
-﻿name: ObrĂˇzek
+name: Obrázek
 icon: image
 fields:
   image:
-    label: Vyberte obrĂˇzek
+    label: Vyberte obrázek
     type: files
     max: 1
     layout: cards
   alt:
-    label: AlternativnĂ­ popis (Alt)
+    label: Alternativní popis (Alt)
     type: text
   caption:
     label: Popisek

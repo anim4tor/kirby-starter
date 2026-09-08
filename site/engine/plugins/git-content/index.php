@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 Kirby::plugin('starter/git-content', [
     'hooks' => [

@@ -1,20 +1,20 @@
-﻿title: O nĂˇs
+title: O nás
 columns:
   main:
     width: 2/3
     fields:
       headline:
-        label: HlavnĂ­ nadpis
+        label: Hlavní nadpis
         type: text
       intro:
-        label: ĂšvodnĂ­ text
+        label: Úvodní text
         type: textarea
       text:
-        label: Text strĂˇnky
+        label: Text stránky
         type: blocks
   sidebar:
     width: 1/3
     sections:
       files:
         type: files
-        headline: ObrĂˇzky
+        headline: Obrázky

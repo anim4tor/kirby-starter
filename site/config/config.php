@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 $root = dirname(__DIR__, 2);
 $projectConfigFile = $root . '/project.json';

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 Kirby::plugin('starter/branch-switcher', [
     'snippets' => [
@@ -21,7 +21,7 @@ Kirby::plugin('starter/branch-switcher', [
                 $target = trim($data['branch'] ?? '');
 
                 if (empty($target) || !preg_match('/^[a-zA-Z0-9._\-\/]+$/', $target)) {
-                    return \Kirby\Http\Response::json(['status' => 'error', 'message' => 'NeplatnĂ˝ nĂˇzev vÄ›tve.'], 400);
+                    return \Kirby\Http\Response::json(['status' => 'error', 'message' => 'Neplatný název větve.'], 400);
                 }
 
                 $res = starterDeployServerBranch($target);
@@ -148,14 +148,14 @@ function starterDeployServerBranch(string $target): array {
         @unlink($tempZip);
         return [
             'status'  => 'error',
-            'message' => "NepodaĹ™ilo se stĂˇhnout vÄ›tev '{$target}' z GitHubu (HTTP {$httpCode}). " . ($error ?: '')
+            'message' => "Nepodařilo se stáhnout větev '{$target}' z GitHubu (HTTP {$httpCode}). " . ($error ?: '')
         ];
     }
 
     $zip = new ZipArchive();
     if ($zip->open($tempZip) !== true) {
         @unlink($tempZip);
-        return ['status' => 'error', 'message' => 'Nelze otevĹ™Ă­t staĹľenĂ˝ archiv ZIP.'];
+        return ['status' => 'error', 'message' => 'Nelze otevřít stažený archiv ZIP.'];
     }
 
     $rootPrefix = '';
@@ -197,6 +197,6 @@ function starterDeployServerBranch(string $target): array {
     @unlink($tempZip);
 
     file_put_contents($repoDir . '/.current-branch', $target);
-    return ['status' => 'success', 'message' => 'VÄ›tev ĂşspÄ›ĹˇnÄ› pĹ™epnuta.', 'current' => $target];
+    return ['status' => 'success', 'message' => 'Větev úspěšně přepnuta.', 'current' => $target];
 }
 

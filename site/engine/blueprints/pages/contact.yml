@@ -1,10 +1,10 @@
-﻿title: Kontakt
+title: Kontakt
 columns:
   main:
     width: 2/3
     fields:
       headline:
-        label: HlavnĂ­ nadpis
+        label: Hlavní nadpis
         type: text
       text:
         label: Text
@@ -23,4 +23,4 @@ columns:
     sections:
       files:
         type: files
-        headline: ObrĂˇzky
+        headline: Obrázky
