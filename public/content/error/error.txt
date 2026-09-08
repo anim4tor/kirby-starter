@@ -1,0 +1,5 @@
+﻿Title: Error
+----
+Headline: StrĂˇnka nebyla nalezena (404)
+----
+Text: PoĹľadovanĂˇ strĂˇnka neexistuje nebo byla pĹ™esunuta.

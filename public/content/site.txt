@@ -1,0 +1,5 @@
+﻿Title: Kirby Starter
+----
+Site_title: Kirby Project Starter
+----
+Site_description: Modern Kirby 4/5 Multiverse Starter with Branch Switching and Git Content Synchronization.

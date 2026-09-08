@@ -1,0 +1,16 @@
+﻿name: Nadpis
+icon: title
+fields:
+  text:
+    label: Text nadpisu
+    type: text
+    required: true
+  level:
+    label: ĂšroveĹ nadpisu
+    type: select
+    options:
+      h1: H1
+      h2: H2
+      h3: H3
+      h4: H4
+    default: h2

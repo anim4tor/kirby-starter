@@ -1,0 +1,10 @@
+﻿name: Seznam
+icon: list-bullet
+fields:
+  items:
+    label: PoloĹľky seznamu
+    type: structure
+    fields:
+      text:
+        label: Text poloĹľky
+        type: text

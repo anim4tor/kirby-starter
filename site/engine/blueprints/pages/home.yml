@@ -1,0 +1,26 @@
+﻿title: DomĹŻ
+columns:
+  main:
+    width: 2/3
+    fields:
+      headline:
+        label: HlavnĂ­ nadpis
+        type: text
+      intro:
+        label: ĂšvodnĂ­ text
+        type: textarea
+      layout_blocks:
+        label: ObsahovĂ© bloky
+        type: blocks
+        fieldsets:
+          - heading
+          - text
+          - image
+          - button
+          - list
+  sidebar:
+    width: 1/3
+    sections:
+      files:
+        type: files
+        headline: ObrĂˇzky strĂˇnky

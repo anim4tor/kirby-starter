@@ -1,0 +1,41 @@
+﻿{
+  "project": {
+    "name": "kirby-starter",
+    "title": "Kirby Project Starter"
+  },
+  "github": {
+    "repo": "anim4tor/kirby-starter",
+    "token": "YOUR_GITHUB_PAT_TOKEN",
+    "secret": "starter_secret_change_me",
+    "system_branches": ["engine", "content", "staging", "main"],
+    "default_branch": "design"
+  },
+  "servers": {
+    "local": {
+      "domains": ["localhost", "127.0.0.1", "*.test", "*.local"],
+      "base_path": ""
+    },
+    "staging": {
+      "name": "Test Server",
+      "url": "https://jiriklusak.cz/projects/kirby-starter",
+      "base_path": "/projects/kirby-starter",
+      "ftp": {
+        "host": "185.102.21.205",
+        "user": "jiriklusak.cz",
+        "pass": "FTP_PASSWORD_HERE",
+        "path": "public_html/projects/kirby-starter/"
+      }
+    },
+    "production": {
+      "name": "Production Server",
+      "url": "https://example.com",
+      "base_path": "",
+      "ftp": {
+        "host": "",
+        "user": "",
+        "pass": "",
+        "path": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+﻿name: đź”„ Sync Kirby Engine Across Branches
+
+on:
+  push:
+    paths:
+      - 'site/engine/**'
+      - 'site/config/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-kirby-engine
+  cancel-in-progress: false
+
+jobs:
+  sync-engine:
+    name: đź”„ Sync Engine & Blueprints
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: đźšš Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: âš™ď¸Ź Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: đź“¦ Backup current engine files
+        run: |
+          mkdir -p /tmp/engine_backup
+          cp -r site/engine /tmp/engine_backup/
+          if [ -d site/config ]; then
+            mkdir -p /tmp/engine_backup/config
+            cp -r site/config/* /tmp/engine_backup/config/
+          fi
+          echo "Engine files saved to backup directory."
+
+      - name: đź” Distribute engine to all target branches
+        run: |
+          SOURCE_BRANCH="${GITHUB_REF#refs/heads/}"
+          echo "Triggered from source branch: $SOURCE_BRANCH"
+
+          # Discover all remote branches excluding content and staging
+          RAW_BRANCHES=$(git branch -r | grep -v 'origin/content' | grep -v 'origin/staging' | grep -v 'origin/HEAD' | sed 's/origin\///')
+          
+          for BRANCH in $RAW_BRANCHES; do
+            BRANCH=$(echo "$BRANCH" | xargs)
+            if [ -z "$BRANCH" ] || [ "$BRANCH" == "$SOURCE_BRANCH" ]; then
+              continue
+            fi
+
+            echo "----------------------------------------"
+            echo "Processing target branch: $BRANCH"
+
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+
+            # Replace site/engine
+            rm -rf site/engine
+            cp -r /tmp/engine_backup/engine site/engine
+
+            # Update site/config
+            if [ -d /tmp/engine_backup/config ]; then
+              mkdir -p site/config
+              cp -r /tmp/engine_backup/config/* site/config/
+            fi
+
+            # Check for changes
+            if [ -n "$(git status --porcelain site/engine site/config)" ]; then
+              echo "Changes detected for $BRANCH, committing and pushing..."
+              git add site/engine site/config
+              git commit -m "chore(engine): auto-sync kirby engine from ${SOURCE_BRANCH} [skip ci]"
+              git pull --rebase origin "$BRANCH" 2>/dev/null || true
+              git push origin "$BRANCH"
+              echo "âś… Pushed updated engine to $BRANCH."
+            else
+              echo "â„ąď¸Ź No engine differences for $BRANCH, skipping."
+            fi
+          done

@@ -1,0 +1,26 @@
+﻿# Kirby & CMS generated
+/public/media/*
+!/public/media/.gitkeep
+/site/store/cache/*
+!/site/store/cache/.gitkeep
+/site/store/logs/*
+!/site/store/logs/.gitkeep
+/site/store/safe/sessions/*
+!/site/store/safe/sessions/.gitkeep
+
+# Local environment & secrets
+.env
+.env.local
+project.local.json
+.current-branch
+deploy-log.json
+
+# Tooling & IDE
+node_modules/
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+.DS_Store
+Thumbs.db

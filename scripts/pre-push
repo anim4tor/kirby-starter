@@ -1,0 +1,17 @@
+﻿#!/bin/sh
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+if [ "$current_branch" = "engine" ] || [ "$current_branch" = "content" ] || [ "$current_branch" = "staging" ]; then
+    exit 0
+fi
+
+changed_files=$(git diff-tree -r --name-only --no-commit-id HEAD origin/$current_branch 2>/dev/null)
+engine_changed=$(echo "$changed_files" | grep -E '^(site/engine/|site/config/)')
+
+if [ -n "$engine_changed" ]; then
+    echo "=========================================================="
+    echo "[Kirby Engine] DetekovĂˇna zmÄ›na v backendu (engine/config)!"
+    echo "[Kirby Engine] Automaticky odesĂ­lĂˇm zmÄ›ny do vÄ›tve origin/engine..."
+    echo "=========================================================="
+    git push --no-verify origin "$current_branch:refs/heads/engine" 2>/dev/null || true
+fi
+exit 0

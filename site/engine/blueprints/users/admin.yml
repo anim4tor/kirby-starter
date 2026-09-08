@@ -1,0 +1,7 @@
+﻿title: AdministrĂˇtor
+permissions:
+  access:
+    panel: true
+    site: true
+    settings: true
+    users: true

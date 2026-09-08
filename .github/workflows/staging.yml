@@ -1,0 +1,27 @@
+﻿name: đź”¨ Staging Deployment
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  deploy:
+    name: đź”¨ Staging Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: đźšš Get latest code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: đź“‚ Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER || '185.102.21.205' }}
+          username: ${{ secrets.FTP_USERNAME || 'jiriklusak.cz' }}
+          password: ${{ secrets.FTP_PASSWORD || '3kNWXaeG' }}
+          server-dir: public_html/projects/kirby-starter/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/media/**
+            **/cache/**
+            **/safe/**

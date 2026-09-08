@@ -1,0 +1,6 @@
+﻿name: Text
+icon: text
+fields:
+  text:
+    label: TextovĂ˝ obsah
+    type: textarea

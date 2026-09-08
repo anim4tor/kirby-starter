@@ -1,0 +1,29 @@
+﻿# Kirby .htaccess
+# ------------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Block all direct access to sensitive store & engine files
+RewriteRule ^site/store/safe/(.*) - [F,L]
+RewriteRule ^site/store/logs/(.*) - [F,L]
+RewriteRule ^project\.json$ - [F,L]
+RewriteRule ^\.env(.*)$ - [F,L]
+
+# Make site links work
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*) index.php [L]
+</IfModule>
+
+# Block content file downloads
+<FilesMatch "(?i:\.(txt|md|yaml|yml|json|cache|log))$">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Allow deploy.php and sync-content.php
+<FilesMatch "(deploy|sync-content)\.php$">
+Order allow,deny
+Allow from all
+</FilesMatch>

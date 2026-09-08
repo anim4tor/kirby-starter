@@ -1,0 +1,14 @@
+﻿name: ObrĂˇzek
+icon: image
+fields:
+  image:
+    label: Vyberte obrĂˇzek
+    type: files
+    max: 1
+    layout: cards
+  alt:
+    label: AlternativnĂ­ popis (Alt)
+    type: text
+  caption:
+    label: Popisek
+    type: text
