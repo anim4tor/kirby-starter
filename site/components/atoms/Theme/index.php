@@ -1,10 +1,10 @@
+<?php if ($kirby->user()): ?>
 <?= css('site/components/atoms/Theme/theme.css') ?>
 
 <div data-scroll data-reveal-image class="fixed inset__top-right grid place__start-end gap__02 z__10" style="--in-delay: 600ms; position: fixed; top: 1rem; right: 1rem; z-index: 1000;">
 
 	<div class="flex gap__01">
-		<?php if ($kirby->user()): ?>
-			<a href="<?= $page->panel()->url() ?>" target="_blank" id="panel-link-btn" aria-label="Open in Kirby Panel">
+		<a href="<?= $page->panel()->url() ?>" target="_blank" id="panel-link-btn" aria-label="Open in Kirby Panel">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
 					<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -21,7 +21,6 @@
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
 			</button>
-		<?php endif; ?>
 	</div>
 
 	<div id="theme-panel-body" class="grid__2 gap__1 inner__05 color__invert bg__black/80 is-hidden" style="max-height: 85vh; overflow-y: auto; font-family: sans-serif; padding: 1rem;">
@@ -302,6 +301,8 @@
 		const copyBtn = document.getElementById('theme-copy-btn');
 		const panelBody = document.getElementById('theme-panel-body');
 		const canvasSelector = document.getElementById('canvas-theme-selector');
+
+		if (!toggleBtn || !panelBody) return;
 
 		// --- 0. EXCLUSIVE DESIGN-TOKEN FONT PARSER ENGINE ---
 		function discoverAndPopulateFonts() {
@@ -630,3 +631,4 @@
 		}
 	});
 </script>
+<?php endif; ?>

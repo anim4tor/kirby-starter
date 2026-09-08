@@ -7,6 +7,11 @@
 html.lenis, html.lenis body {
  height: auto;
 }
+html, body {
+  &.lenis, &.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
 .lenis.lenis-smooth {
  scroll-behavior: auto !important;
 }

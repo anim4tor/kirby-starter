@@ -1,5 +1,13 @@
 Title: Error
+
 ----
+
 Headline: Stránka nebyla nalezena (404)
+
 ----
+
 Text: Požadovaná stránka neexistuje nebo byla přesunuta.
+
+----
+
+Uuid: ptIkdBo7lS3FVPuL

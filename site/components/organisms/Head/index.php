@@ -1,6 +1,6 @@
 <head>
 
-	<?= $site->seoheadscripts() ?>
+	<?= site()->seoheadscripts() ?>
 
 	<script>
       document.documentElement.className = 'js';
@@ -8,6 +8,7 @@
 	 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title><?= $page->title()->html() ?> | <?= site()->title()->html() ?></title>
 
 	<?php 
 	$assetVersion = function($path) {
@@ -20,7 +21,6 @@
 	<?= css($assetVersion('public/assets/css/theme.dist.css')) ?>
 	<?= css($assetVersion('public/assets/css/theme-tokens.css')) ?>
 	<?= css($assetVersion('public/assets/css/app.dist.css')) ?>
-	<!-- <?= css('public/assets/css/cookieconsent.css') ?> -->
 	
 	<?= snippet('atoms/favicon') ?>
 

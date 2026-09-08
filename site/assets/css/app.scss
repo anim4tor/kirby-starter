@@ -1,0 +1,55 @@
+/*
+	UTILS
+	--------------------------------------------------
+*/
+	@import "../../components/atoms/Media/media";
+	@import "../../components/atoms/Animation/animation";
+	@import "../../components/atoms/Reveal/reveal";
+	@import "../../components/atoms/Scroll/scroll";
+
+/*
+	ATOMS 
+	--------------------------------------------------
+*/
+	@import "../../components/atoms/Icon/icon";
+	@import "../../components/atoms/List/list";
+	@import "../../components/atoms/Button/button";
+	@import "../../components/atoms/Link/link";
+	@import "../../components/atoms/Input/input";
+	@import "../../components/atoms/Image/image";
+
+/*
+	ORGANISMS
+	--------------------------------------------------
+*/
+	@import "../../components/organisms/Body/body";
+	@import "../../components/organisms/Loader/loader";
+	@import "../../components/organisms/Header/header";
+	@import "../../components/organisms/Footer/footer";
+	@import "../../components/organisms/Aside/aside";
+	@import "../../components/organisms/Carousel/carousel";
+	@import "../../components/organisms/Tabs/tabs";
+	@import "../../components/organisms/Modal/modal";
+
+
+/*
+	TEMPLATES
+	--------------------------------------------------
+*/	
+	@import "../../components/templates/Home/index";
+
+
+/*
+	THEMES
+	--------------------------------------------------
+*/
+
+/*
+	VENDOR
+	--------------------------------------------------
+*/
+
+
+* {
+	/*border: 1px solid red;*/
+}

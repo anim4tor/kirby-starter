@@ -6,27 +6,12 @@
 
 class Loader {
     constructor(onProgress, onComplete) {
-        console.log("Loading: 0%");
-        this.images = Array.from(document.querySelectorAll('img'));
+        this.images = Array.from(document.querySelectorAll('img')).filter(img => img.src && !img.src.startsWith('data:'));
         this.total = this.images.length;
         this.loaded = 0;
         this.onProgress = onProgress || (() => {}); 
         this.onComplete = onComplete || (() => {});
     }
-
-    // init() {
-    //     if (this.total === 0) return this.onComplete();
-
-    //     this.images.forEach(img => {
-    //         // Check if image is already complete (cached)
-    //         if (img.complete) {
-    //             this.updateProgress();
-    //         } else {
-    //             img.addEventListener('load', () => this.updateProgress());
-    //             img.addEventListener('error', () => this.updateProgress());
-    //         }
-    //     });
-    // }
 
     init() {
         if (this.total === 0) {
@@ -34,47 +19,44 @@ class Loader {
             return;
         }
 
+        // Safety timeout so page never gets stuck
+        const safetyTimer = setTimeout(() => {
+            console.warn("Loader safety timeout triggered");
+            this.onComplete();
+        }, 2000);
+
         this.images.forEach(img => {
+            if (img.complete && img.naturalWidth > 0) {
+                const rect = img.getBoundingClientRect();
+                img.style.setProperty('--w', `${rect.width}px`);
+                img.style.setProperty('--h', `${rect.height}px`);
+                this.updateProgress(safetyTimer);
+                return;
+            }
+
             const tempImage = new Image();
             tempImage.src = img.src;
 
             tempImage.onload = () => {
-                // 1. Capture the true dimensions from the loaded file
-                // const width = tempImage.naturalWidth;
-                // const height = tempImage.naturalHeight;
-
                 const rect = img.getBoundingClientRect();
-                const width = rect.width;
-                const height = rect.height;
-
-                // 2. Apply those dimensions to the original DOM element
-                // This prevents layout shift and informs your CSS
-                img.width = width;
-                img.height = height;
-
-                // 2. Set CSS Variables on the specific image element
-                // We append 'px' so you can use them directly in calculations
-                img.style.setProperty('--w', `${width}px`);
-                img.style.setProperty('--h', `${height}px`);
-
-                this.updateProgress();
+                img.style.setProperty('--w', `${rect.width || tempImage.naturalWidth}px`);
+                img.style.setProperty('--h', `${rect.height || tempImage.naturalHeight}px`);
+                this.updateProgress(safetyTimer);
             };
 
             tempImage.onerror = () => {
-                console.warn(`Failed to load: ${img.src}`);
-                this.updateProgress();
+                this.updateProgress(safetyTimer);
             };
         });
     }
 
-    updateProgress() {
+    updateProgress(safetyTimer) {
         this.loaded++;
         const percent = Math.min(Math.floor((this.loaded / this.total) * 100), 100);
-        console.clear();
-        console.log(`Loading: ${percent}%`);
         this.onProgress(percent);
 
-        if (this.loaded === this.total) {
+        if (this.loaded >= this.total) {
+            if (safetyTimer) clearTimeout(safetyTimer);
             this.onComplete();
         }
     }

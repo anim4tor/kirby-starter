@@ -1,7 +1,17 @@
 Title: Domů
+
 ----
+
 Headline: Vítejte v Kirby Starter
+
 ----
+
 Intro: Tento projekt je připraven s automatickou distribucí Kirby enginu, přepínačem verzí na hostingu a obousměrným verzováním obsahu do Gitu.
+
 ----
-Layout_blocks: [{"content":{"level":"h2","text":"Rychlý start"},"id":"b1","type":"heading"},{"content":{"text":"Začněte úpravou šablon v `site/components/` a blueprintů v `site/engine/blueprints/`."},"id":"b2","type":"text"},{"content":{"link":"https://getkirby.com/docs","style":"primary","text":"Dokumentace Kirby"},"id":"b3","type":"button"}]
+
+Layout-blocks: [{"content":{"level":"h2","text":"Rychlý start"},"id":"b1","type":"heading"},{"content":{"text":"Začněte úpravou šablon v `site/components/` a blueprintů v `site/engine/blueprints/`."},"id":"b2","type":"text"},{"content":{"link":"https://getkirby.com/docs","style":"primary","text":"Dokumentace Kirby"},"id":"b3","type":"button"}]
+
+----
+
+Uuid: 1fYCu2ihDgi92kGt

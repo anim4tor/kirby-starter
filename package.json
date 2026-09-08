@@ -1,0 +1,26 @@
+{
+  "name": "kirby-starter",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"CSS,JS,SYNC\" -c \"blue,yellow,green\" \"npm run watch:css\" \"npm run watch:js\" \"npm run sync\"",
+    "watch": "concurrently -n \"CSS,JS\" -c \"blue,yellow\" \"npm run watch:css\" \"npm run watch:js\"",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "node scripts/build-css.js --minify",
+    "watch:css": "node scripts/watch-css.js",
+    "build:js": "node scripts/build-js.js --minify",
+    "watch:js": "node scripts/watch-js.js",
+    "sync": "browser-sync start --config bs-config.js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "browser-sync": "^3.0.3",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.25.0",
+    "idiomorph": "^0.7.4",
+    "postcss": "^8.5.1",
+    "sass": "^1.83.4",
+    "tailwindcss": "^3.4.17"
+  }
+}

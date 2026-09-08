@@ -1,18 +1,12 @@
-<body page="<?= $page ?>" theme="invert" >
+<body page="<?= $page->id() ?>" theme="invert" >
     
-    <?= $site->seobodyscripts() ?>
+    <?= site()->seobodyscripts() ?>
 
     <!-- The loader -->
     <?php snippet('organisms/Loader') ?>
 
     <!-- The aside --> 
     <?php snippet('organisms/Aside'); ?>
-
-    <!-- The contact widget --> 
-    <?= snippet('organisms/Contact') ?>
-    
-    <!-- The theme widget --> 
-    <?php //snippet('atoms/Theme'); ?>
     
     <!-- Scroll container -->
     <main id="top" data-scroll-content>
@@ -30,6 +24,4 @@
 
     </main>
 
-    
 </body>
-

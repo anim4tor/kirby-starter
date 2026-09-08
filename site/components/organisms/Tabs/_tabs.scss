@@ -1,0 +1,298 @@
+/* 
+
+	ORGANISMS: Tabs
+
+*/
+
+@import "../../atoms/Media/media";
+@import "../../atoms/Animation/animation";
+
+:root {}
+
+@property --p {
+	syntax: '<number>';
+	inherits: true;
+	initial-value: 0;
+}
+
+[data-tabs] {
+	min-width: 0;
+	width: 100%;
+}
+
+[data-tab-prev],
+[data-tab-next] {
+	cursor: pointer;
+}
+
+[data-pane-container] {
+	width: 100%;
+	min-width: 0;
+	overflow: hidden;
+}
+
+[data-pane] {
+	width: 100%;
+	min-width: 0;
+}
+
+[data-tabs][data-init] {
+	[data-pane] {
+		pointer-events: none;
+
+		&[data-active] {
+			z-index: 1;
+			pointer-events: all;
+		}
+
+		&:not([data-active]) {
+			z-index: 0;
+		}
+	}
+}
+
+[data-tabs] {
+	[data-pane] [data-reveal-text] {
+		opacity: 0;
+	}
+
+	[data-pane][data-active] [data-reveal-text] {
+		opacity: 1;
+	}
+}
+
+[data-tabs="default"] {
+	[data-pane] {
+		opacity: 0;
+	}
+
+	[data-pane][data-active] {
+		opacity: 1;
+	}
+}
+
+[data-tabs]:not([data-init]) {
+	[data-pane]:first-child [data-reveal-text] {
+		opacity: 1;
+	}
+}
+
+[data-tabs="scrollable"] {
+	[data-pane] {
+
+		/*			opacity: 0;*/
+		&[data-active] {
+			/*				opacity: 1;*/
+		}
+	}
+}
+
+[data-tabs]:not([data-init]) {
+	[data-pane]:not(:first-child) {
+		pointer-events: none;
+	}
+}
+
+
+[data-tab] {
+	cursor: pointer;
+
+	&.button[data-active]:not([theme="dark"]) {
+		background: rgba(var(--color-invert), 1);
+		color: rgba(var(--color-text), 1);
+		border-color: transparent;
+	}
+
+	&:not(button):not([data-active]) {
+		opacity: .5;
+	}
+}
+
+/* Accessibility focus */
+/*[role="tab"]:focus { outline: 2px solid #007bff; }*/
+[role="tab"]:focus {
+	position: relative;
+
+}
+
+[data-tabs] [data-tab-reveal]:first-child {
+	[data-reveal-cover] figure {
+		--p: 1;
+	}
+}
+
+[data-tabs][data-init] [data-tab-reveal] {
+	[data-reveal-text] {
+		@include reveal-text-setup;
+	}
+
+	[data-reveal-image] {
+		/*		visibility: hidden;*/
+		@include animation((visibility, opacity));
+		--reveal-duration: 600ms;
+		transition-duration: var(--reveal-duration);
+		opacity: 0;
+
+		/*			visibility: hidden;*/
+		/*			@include animation(visibility);*/
+		/*			clip-path: inset(0% 100% 0% 0%);*/
+		/*			transform: translateX(0%);*/
+		/*			animation: image-out var(--reveal-duration) var(--animation-timing) both;*/
+		img {
+			/*				transform: translateX(0);*/
+		}
+	}
+
+	[data-reveal-cover] figure {
+		/*  	--p: 1;*/
+	}
+}
+
+/* 2. HOVER IN STAV (když na něj najedeš) */
+[data-tabs]:not([data-init]) [data-pane][data-tab-reveal]:first-child {
+	[data-reveal-text] {
+		@include reveal-text-in;
+	}
+
+	[data-reveal-cover] {
+		figure {
+			/*			animation: cover-in var(--reveal-duration) var(--animation-timing) forwards;*/
+			/*			--p: 1;*/
+		}
+	}
+
+}
+
+[data-tabs][data-init] [data-tab-reveal][data-active] {
+	[data-reveal-text] {
+		/*  	--in-delay: 400ms;*/
+		@include reveal-text-in;
+	}
+
+	[data-reveal-image] {
+
+		visibility: visible;
+		opacity: 1;
+		/*			animation: image-in var(--reveal-duration) var(--animation-timing) forwards;*/
+		/*      animation-play-state: running;*/
+
+		img {
+			/*				transition: none;*/
+			/*				transform: translateX(0);*/
+		}
+
+
+	}
+
+	[data-reveal-cover] {
+		figure {
+			animation: cover-in var(--reveal-duration) var(--animation-timing) forwards;
+		}
+	}
+}
+
+[data-tab-reveal].is-closing {
+	[data-reveal-image] {
+		/*  	visibility: visible;*/
+		/*		animation: image-out var(--reveal-duration) var(--animation-timing) forwards;*/
+		/*img {
+			@include animation;
+			transform: translateX(20%);
+		}*/
+	}
+
+	[data-reveal-cover] {
+		figure {
+			--p: 1;
+		}
+	}
+}
+
+[data-tabs-progress-line] {
+	height: 1px;
+	background-color: var(--col);
+	transform-origin: left;
+	transform: scaleX(calc(0 + var(--progress)*1));
+	margin-top: -1px;
+}
+
+[data-tabs-autoplay-line] {
+	--duration: 10s;
+	opacity: 0.8;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	top: -1px;
+	height: 1px;
+	background-color: var(--col);
+	transform-origin: left;
+	/* Use 'forwards' to stay at end, 'linear' for constant speed */
+	animation: autoplay-progress var(--duration) linear infinite;
+	z-index: 10;
+}
+
+@keyframes autoplay-progress {
+	from {
+		transform: scaleX(0);
+		width: 100%;
+	}
+
+	to {
+		transform: scaleX(1);
+		width: 100%;
+	}
+}
+
+/* Pause animation on hover */
+[data-tabs]:hover [data-tabs-autoplay-line] {
+	/*  animation-play-state: paused;*/
+}
+
+@keyframes image-in {
+	0% {
+		opacity: 0;
+		/*		clip-path: inset(0% 100% 0% 0%);*/
+		/*		transform: translateX(0%);*/
+	}
+
+	100% {
+		opacity: 1;
+		/*		clip-path: inset(0% 0% 0% 0%);*/
+		/*		transform: translateX(0%);*/
+	}
+}
+
+
+@keyframes image-out {
+	0% {
+		/*			clip-path: inset(0% 0% 0% 0%);*/
+		/*	    transform: scale(1) translateX(0%);*/
+		opacity: 1;
+	}
+
+	100% {
+		/*			clip-path: inset(0% 0% 0% 0%);*/
+		/*	    transform: scale(1) translateX(20%);*/
+		opacity: 0;
+	}
+}
+
+@keyframes cover-in {
+	from {
+		--p: 0;
+	}
+
+	to {
+		--p: 1;
+	}
+}
+
+@keyframes cover-out {
+	from {
+		--p: 1;
+	}
+
+	to {
+		--p: 0;
+	}
+}

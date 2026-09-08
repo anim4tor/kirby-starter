@@ -1,6 +1,6 @@
 /**
  * Design Tokens Live Export
- * Saved via Kirby Theme Panel Component
+ * Saved via Kirby Theme Studio
  */
 
 :root {
@@ -20,9 +20,9 @@
     /* ==========================================================================
        FLUID RESPONSIVE SCALE ENGINE TOKENS
        ========================================================================== */
-    --type-scale:              1.618;
+    --type-scale:              1.414;
     --type-start-rem:          0.5rem;
-    --type-start-vw:           0.75vw;
+    --type-start-vw:           0.95vw;
     --base-line-height:        1.1;
     --body-scale:              1.222;
     --body-start-rem:          0.7rem;
@@ -50,7 +50,6 @@
     /* ==========================================================================
        ACTIVE THEME PALETTE MATRIX TOKENS
        ========================================================================== */
-    --color-delay:             300ms;
     --color-acc:               #ED1359;
     --color-light:             #EDECE7;
     --color-dark:              #000000;
@@ -58,6 +57,7 @@
     --color-black:             #000000;
     --color-white:             #FFFFFF;
     --color-invert:            #FFFFFF;
+    --color-delay:             300ms;
 
     /* ==========================================================================
        IMAGE STYLING TOKENS
